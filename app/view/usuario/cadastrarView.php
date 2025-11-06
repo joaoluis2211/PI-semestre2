@@ -63,6 +63,9 @@
           class="w-full px-4 py-2 border border-gray-300 rounded mb-4" />
 
         <button type="submit" class="w-full bg-[#b20000] hover:bg-red-500 text-white font-semibold py-3 rounded mb-4">CADASTRAR</button>
+        <div class="text-sm text-center pt-2">
+            <p class="text-gray-600">Já tem uma conta? <a href="/PI-semestre1/index.php" class="text-sm font-semibold text-[#b20000] hover:underline">Faça Login</a></p>
+        </div>
       </form>
 
       <footer class="mt-6">
