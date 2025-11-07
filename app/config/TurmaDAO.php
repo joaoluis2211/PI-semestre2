@@ -9,9 +9,9 @@ class TurmaDAO{
     public function cadastrarTurma(Turma $turma){
         try {
             $conn = $this->db->getConnection();
-            $sql = "INSERT INTO turma (periodo, curso) VALUES (?, ?)";
+            $sql = "INSERT INTO turma (semestre, curso) VALUES (?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$turma->getPeriodo(), $turma->getCurso()]);
+            $stmt->execute([$turma->getSemestre(), $turma->getCurso()]);
             return true;
         } catch (\Throwable $th) {
             echo "<script>console.log('Cadastrar turma error: " . $th->getMessage() . "');</script>";
@@ -23,8 +23,8 @@ class TurmaDAO{
     public function localizarTurma(Turma $turma){
         try {
             $conn = $this->db->getConnection();
-            $stmt = $conn->prepare('SELECT idturma FROM turma WHERE curso = ? AND periodo = ? LIMIT 1');
-            $stmt->execute([$turma->getCurso(), $turma->getPeriodo()]);
+            $stmt = $conn->prepare('SELECT idturma FROM turma WHERE curso = ? AND semestre = ? LIMIT 1');
+            $stmt->execute([$turma->getCurso(), $turma->getSemestre()]);
             $turma = $stmt->fetchColumn();
             return $turma;
         } catch (Exception $e) {

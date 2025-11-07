@@ -38,7 +38,13 @@
 
       <form action="../../../roteador.php?controller=Usuario&acao=cadastrar" method="post" class="text-left border px-8 py-6 rounded-lg shadow-md">
         <h1 class="text-2xl font-semibold mb-4 text-center">Cadastrar</h1>
-
+        <?php
+        session_start();
+          if (isset($_SESSION['erro'])) {
+              echo '<p class="text-red-500 mb-4">' . htmlspecialchars($_SESSION['erro']) . '</p>';
+              unset($_SESSION['erro']);
+          }
+          ?>
         <label for="nome" class="block mb-1">Nome:</label>
         <input type="text" id="nome" name="nome" required
           class="w-full px-4 py-2 border border-gray-300 rounded mb-4" />
@@ -49,10 +55,16 @@
             <option value="Gestão de Produção Industrial">Gestão de Produção Industrial</option>
             <option value="Gestão Empresarial">Gestão Empresarial</option>
         </select>
-        
-        <label for="periodo" class="block mb-1">Período:</label>
-        <input type="text" id="periodo" name="periodo" required placeholder="2025-1 (semestre)"
-          class="w-full px-4 py-2 border border-gray-300 rounded mb-4" />
+
+        <label for="semestre" class="block mb-1">Semestre:</label>
+        <select class="w-full px-4 py-3 border border-gray-300 rounded mb-4" name="semestre">
+            <option value="1">1º Semestre</option>
+            <option value="2">2º Semestre</option>
+            <option value="3">3º Semestre</option>
+            <option value="4">4º Semestre</option>
+            <option value="5">5º Semestre</option>
+            <option value="6">6º Semestre</option>
+        </select>
         
         <label for="email" class="block mb-1">Email:</label>
         <input type="email" id="email" name="email" required

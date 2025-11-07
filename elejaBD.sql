@@ -4,7 +4,7 @@ use eleja;
 
 create table turma(
 idturma int primary key auto_increment not null,
-periodo int not null,
+semestre int not null,
 curso varchar(60) not null
 );
 

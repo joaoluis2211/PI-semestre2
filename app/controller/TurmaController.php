@@ -10,7 +10,7 @@ class TurmaController {
     
     public function cadastrar(Turma $turma){
         try {
-            $this->turmaDAO->cadastrarTurma($turma);
+            return $this->turmaDAO->cadastrarTurma($turma);
         } catch (Exception $e) {
             error_log("Erro ao cadastrar turma: " . $e->getMessage());
         }

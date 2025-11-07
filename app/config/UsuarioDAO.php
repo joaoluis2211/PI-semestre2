@@ -70,7 +70,11 @@ class UsuarioDAO {
             $sql = 'SELECT COUNT(*) FROM usuario WHERE email = ?';
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute([$email]);
-            return $stmt->fetchColumn() > 0;
+            $count = $stmt->fetchColumn();
+            if ($count > 0) {
+                return true;
+            }
+            return false;
         } catch (Exception $e) {
             echo "<script>console.log('Verificar email error: " . $e->getMessage() . "');</script>";
             return false;

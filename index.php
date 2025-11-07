@@ -1,17 +1,3 @@
-<?php
-session_start();
-
-if (!empty($_SESSION['login_error'])) {
-    $msg = htmlspecialchars($_SESSION['login_error'], ENT_QUOTES, 'UTF-8');
-    echo "<div class=\"alert alert-danger\">{$msg}</div>"; // ajuste classes/HTML conforme seu layout
-    unset($_SESSION['login_error']);
-} elseif (!empty($_SESSION['login_success'])) {
-    $msg = htmlspecialchars($_SESSION['login_success'], ENT_QUOTES, 'UTF-8');
-    echo "<div class=\"alert alert-success\">{$msg}</div>"; // ajuste classes/HTML conforme seu layout
-    unset($_SESSION['login_success']);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -49,7 +35,17 @@ if (!empty($_SESSION['login_error'])) {
 
       <form action="roteador.php?controller=Usuario&acao=login" method="post" class="text-left border px-8 py-6 rounded-lg shadow-md">
         <h1 class="text-2xl font-semibold mb-4 text-center">Acesse para votar</h1>
-
+        <?php
+          session_start();
+          if (isset($_SESSION['erro'])) {
+              echo '<p class="text-red-500 mb-4">' . htmlspecialchars($_SESSION['erro']) . '</p>';
+              unset($_SESSION['erro']);
+          }
+          if (isset($_SESSION['sucesso'])) {
+              echo '<p class="text-green-500 mb-4">' . htmlspecialchars($_SESSION['sucesso']) . '</p>';
+              unset($_SESSION['sucesso']);
+          }
+          ?>
         <label for="email" class="block mb-1">E-mail</label>
         <input type="email" id="email" name="email" required
           class="w-full px-4 py-2 border border-gray-300 rounded mb-4" />

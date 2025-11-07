@@ -65,11 +65,11 @@ class AlunoDAO{
     }
     
 
-    public function updateTurma(Aluno $aluno, int $periodo){
+    public function updateTurma(Aluno $aluno, int $semestre){
         try {
             $conn = $this->db->getConnection();
             $stmt = $conn->prepare('UPDATE aluno set idturma = ? where idaluno = ?');
-            $stmt->execute([$periodo, $aluno->getIdaluno()]);
+            $stmt->execute([$semestre, $aluno->getIdaluno()]);
             $aluno = $stmt->fetch(PDO::FETCH_ASSOC);
             return $aluno;
         } catch (Exception $e) {
