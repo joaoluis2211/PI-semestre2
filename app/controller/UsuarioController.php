@@ -81,8 +81,12 @@ class UsuarioController {
             $mes = date('m');
             $semestre = $turma->getSemestre();
             if ($mes == 1 || $mes == 7 && $semestre <= 6 ) {
+                echo $mes;
+                $semestre += 1;
+                $turma->setSemestre($semestre);
+                $idturma = $turmaController->getIdTurma($turma);
                 $alunoController = new AlunoController();
-                $alunoController->atualizarTurma($aluno, $semestre);
+                $alunoController->atualizarTurma($aluno, $idturma);
             }
             header('Location: app/view/usuario/home.html');
         }

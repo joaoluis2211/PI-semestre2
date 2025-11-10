@@ -34,10 +34,9 @@ class AlunoController {
         }
     }
 
-    public function atualizarTurma(Aluno $aluno, int $semestre){
+    public function atualizarTurma(Aluno $aluno, int $idturma){
         try {
-            $semestre += 1;
-            $this->alunoDAO->updateTurma($aluno, $semestre);
+            $this->alunoDAO->updateTurma($aluno, $idturma);
             return true;
         } catch (Exception $e) {
             echo "<script>console.log('Localizar turma error: " . $e->getMessage() . "');</script>";

@@ -26,7 +26,7 @@ constraint fk_aluno_usuario foreign key (idaluno) references aluno (idaluno)
 
 create table candidatura(
 idcandidatura int primary key auto_increment not null,
-dataIncio date not null,
+dataInicio date not null,
 dataFim date not null,
 idturma int not null,
 constraint fk_turma_candidatura foreign key (idturma) references turma (idturma)
@@ -44,6 +44,7 @@ create table candidato(
 idcandidato int primary key auto_increment not null,
 idaluno int not null,
 idcandidatura int not null,
+qtdVotos int not null,
 constraint fk_aluno_candidato foreign key (idaluno) references aluno (idaluno),
 constraint fk_candidatura_candidato foreign key (idcandidatura) references candidatura (idcandidatura)
 );

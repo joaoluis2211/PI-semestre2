@@ -2,6 +2,7 @@ const btnVotar = document.querySelectorAll('.votar');
 
 btnVotar.forEach(button => {
     button.addEventListener('click', () =>{
+        const idcandidatura = this.dataset.candidatura
         const modalId = button.getAttribute('data-modal');
         const modal = document.getElementById(modalId);
 
@@ -276,3 +277,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+function candidatar() {
+document.getElementById('btnCandidatar').addEventListener('click', function() {
+  const btn = this;
+  const acao = btn.dataset.candidatado === "true" ? "remover" : "cadastrar";
+  const idaluno = btn.dataset.aluno;
+  const idcandidatura = btn.dataset.candidatura;
+
+  // URL chama o roteador
+  const url = `/PI-semestre1/roteador.php?controller=Candidato&acao=${acao}`;
+  
+   fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+    body: new URLSearchParams({ idaluno, idcandidatura })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.sucesso) {
+      if (acao === 'cadastrar') {
+        btn.innerText = 'REMOVER CANDIDATURA';
+        btn.className = 'mx-auto w-[14rem] py-4 rounded-lg text-xl font-semibold text-white mt-auto bg-gray-600 hover:bg-gray-700'
+        btn.dataset.candidatado = "true";
+        mostrarModal('Candidatura confirmada com sucesso!');
+      } else {
+        btn.innerText = 'CANDIDATAR-SE';
+        btn.className = 'mx-auto w-[14rem] py-4 rounded-lg text-xl font-semibold text-white mt-auto bg-[#b20000] hover:bg-red-600'
+        btn.dataset.candidatado = "false";
+        mostrarModal('Candidatura removida.');
+      }
+    } else {
+      mostrarModal('Erro ao processar candidatura.');
+    }
+  })
+  .catch(() => mostrarModal('Falha na comunicação com o servidor.'));
+});
+
+function mostrarModal(msg) {
+  document.getElementById('mensagemModal').innerText = msg;
+  document.getElementById('modalConfirmacao').style.display = 'flex';
+}
+}
+
+function fecharModal() {
+  document.getElementById('modalConfirmacao').style.display = 'none';
+}

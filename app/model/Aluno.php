@@ -1,14 +1,19 @@
 <?php
 
 class Aluno {
-    private int $id;
+    private int $idaluno;
     private string $nome;
     private int $idturma;
 
 
-    public function getId(): int
+    public function getIdaluno(): int
     {
-        return $this->id;
+        return $this->idaluno;
+    }
+
+    public function setIdaluno(int $idaluno): void
+    {
+        $this->idaluno = $idaluno;
     }
 
     public function getNome(): string

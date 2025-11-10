@@ -14,7 +14,7 @@ if (file_exists($controllerFile)) {
     $obj = new $controllerClass();
 
     if (method_exists($obj, $acao)) {
-        $obj->$acao(); // 🔥 Aqui é onde a função do Controller é chamada!
+        $obj->$acao();
     } else {
         echo "Ação '$acao' não encontrada.";
     }

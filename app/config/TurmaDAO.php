@@ -1,5 +1,5 @@
 <?php
-require_once 'app/config/dbconection.php';
+require_once 'dbconection.php';
 
 class TurmaDAO{
     private $db;
@@ -25,8 +25,8 @@ class TurmaDAO{
             $conn = $this->db->getConnection();
             $stmt = $conn->prepare('SELECT idturma FROM turma WHERE curso = ? AND semestre = ? LIMIT 1');
             $stmt->execute([$turma->getCurso(), $turma->getSemestre()]);
-            $turma = $stmt->fetchColumn();
-            return $turma;
+            $idturma = $stmt->fetchColumn();
+            return $idturma;
         } catch (Exception $e) {
             echo "<script>console.log('Localizar turma error: " . $e->getMessage() . "');</script>";
             return null;

@@ -56,7 +56,7 @@ class AlunoDAO{
             $sql = "SELECT * FROM aluno WHERE idaluno = ? LIMIT 1";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$idaluno]);
-            $aluno = $stmt->fetch(PDO::FETCH_ASSOC);
+            $aluno = $stmt->fetchObject('Aluno');
             return $aluno;
         } catch (\Throwable $th) {
             echo "<script>console.log('Pegar aluno error: " . $th->getMessage() . "');</script>";
@@ -65,11 +65,11 @@ class AlunoDAO{
     }
     
 
-    public function updateTurma(Aluno $aluno, int $semestre){
+    public function updateTurma(Aluno $aluno, int $idturma){
         try {
             $conn = $this->db->getConnection();
             $stmt = $conn->prepare('UPDATE aluno set idturma = ? where idaluno = ?');
-            $stmt->execute([$semestre, $aluno->getIdaluno()]);
+            $stmt->execute([$idturma, $aluno->getIdaluno()]);
             $aluno = $stmt->fetch(PDO::FETCH_ASSOC);
             return $aluno;
         } catch (Exception $e) {
