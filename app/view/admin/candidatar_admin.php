@@ -32,7 +32,7 @@
     </script>
 </head>
 
-<body class="flex flex-col min-h-screen font-sans bg-white text-black" onload="excluirCandidatura()">
+<body class="flex flex-col min-h-screen font-sans bg-white text-black" onload="excluirCandidatura(), votar()">
     <nav class="flex flex-col bg-white max-h-max justify-between items-center">
         <div class="flex items-center w-full justify-between">
             <a href="home_admin.html"><img class="max-w-48" src="../../../assets/logo-fatec.png" alt="logo fatec"></a>
@@ -74,7 +74,7 @@
                 <p class="mx-auto mb-8">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFim'])) ?> 19:45</p>
                 <div class="flex">
                     <button id="excluirCandidatura" class="mx-auto w-max p-3 rounded-lg bg-white outline border-gray-300 text-xl font-semibold text-gray-300 mt-auto" type="button">EXCLUIR CANDIDATURA</button>
-                    <button  class="votar mx-auto w-max p-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white mt-auto" data-modal="modal-candidatos" type="button">VIZUALIZAR CANDIDATURA</button>
+                    <button  data-candidatura="<?= htmlspecialchars($candidatura['idcandidatura']) ?>" class="votar mx-auto w-max p-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white mt-auto" data-modal="modal-candidatos" type="button">VIZUALIZAR CANDIDATURA</button>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -162,6 +162,14 @@
           <?php //endforeach; ?>
         </div>
     </dialog>
+
+    <div id="modalConfirmacao" style="display:none; position:fixed; top:0; left:0;
+        width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+        <div style="background:white; padding:20px; border-radius:10px; text-align:center;">
+            <p id="mensagemModal"></p>
+            <button onclick="fecharModal()">OK</button>
+        </div>
+    </div>
 
     <script src="../../../public/js/script.js"></script>
 </body>

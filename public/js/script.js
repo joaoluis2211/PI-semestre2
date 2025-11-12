@@ -1,14 +1,37 @@
+function votar(){
 const btnVotar = document.querySelectorAll('.votar');
 
 btnVotar.forEach(button => {
     button.addEventListener('click', () =>{
-        const idcandidatura = this.dataset.candidatura
+        const botao = button;
+        const idcandidatura = botao.dataset.candidatura;
+        echo ""
         const modalId = button.getAttribute('data-modal');
         const modal = document.getElementById(modalId);
 
-        modal.showModal();
+        const url = `/PI-semestre1/roteador.php?controller=Candidato&acao=listar`;
+  
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+          body: new URLSearchParams({idcandidatura })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.sucesso) {
+              modal.showModal();
+          } else {
+            mostrarModal('Erro ao vizualizar candidatos.');
+          }
+        })
+        .catch(() => mostrarModal('Falha na comunicação com o servidor.'));
+        });
     });
-});
+    function mostrarModal(msg) {
+      document.getElementById('mensagemModal').innerText = msg;
+      document.getElementById('modalConfirmacao').style.display = 'flex';
+    }
+  }
 
 const btnCandidatar = document.querySelectorAll('.candidatar')
 

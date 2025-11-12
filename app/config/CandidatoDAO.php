@@ -33,7 +33,7 @@ class CandidatoDAO{
         }
     }
 
-    public function listarCandidatos($idcandidatura){
+    public function listarCandidatos(int $idcandidatura){
         try {
             $conn = $this->db->getConnection();
             $sql = "SELECT a.nome FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno where c.idcandidatura = ?";

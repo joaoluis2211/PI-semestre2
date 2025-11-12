@@ -38,9 +38,11 @@ class CandidatoController {
         }
     }
 
-    public function listar($idcandidatura){
+    public function listar(){
         try {
-            return $this->candidatoDAO->listarCandidatos($idcandidatura);
+            $idcandidatura = $_POST['idcandidatura'] ?? null;
+            $this->candidatoDAO->listarCandidatos($idcandidatura);
+            echo json_encode(['sucesso' => true]);
         } catch (Exception $e) {
             echo "<script>console.log('Erro ao listar candidatos: " . $e->getMessage() . "');</script>";
         }
