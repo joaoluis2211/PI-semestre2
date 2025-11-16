@@ -39,4 +39,22 @@ class CandidaturaController {
             echo "<script>console.log('Erro ao listar candidaturas: " . $e->getMessage() . "');</script>";
         }
     }
+
+    public function listarCandidaturasAbertas(){
+        try {
+            return $this->candidaturaDAO->listarCandidaturasAbertas();
+        } catch (Exception $e) {
+            echo "<script>console.log('Erro ao listar candidaturas abertas: " . $e->getMessage() . "');</script>";
+            return [];
+        }
+    }
+
+    public function listarCandidaturasAbertasPorTurma(int $idturma){
+        try {
+            return $this->candidaturaDAO->listarCandidaturasAbertasPorTurma($idturma);
+        } catch (Exception $e) {
+            echo "<script>console.log('Erro ao listar candidaturas abertas por turma: " . $e->getMessage() . "');</script>";
+            return [];
+        }
+    }
 }

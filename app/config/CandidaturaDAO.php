@@ -33,6 +33,40 @@ class CandidaturaDAO{
         }
     }
 
+    public function listarCandidaturasAbertas(){
+        try {
+            $conn = $this->db->getConnection();
+            $dataAtual = date('Y-m-d');
+            $sql = "SELECT c.idcandidatura, c.dataInicio, c.dataFim, c.idturma, t.semestre, t.curso 
+                    FROM candidatura c 
+                    INNER JOIN turma t ON c.idturma = t.idturma
+                    WHERE c.dataInicio <= ? AND c.dataFim >= ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$dataAtual, $dataAtual]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Throwable $th) {
+            echo "<script>console.log('Listar candidaturas abertas error: " . $th->getMessage() . "');</script>";
+            return [];
+        }
+    }
+
+    public function listarCandidaturasAbertasPorTurma(int $idturma){
+        try {
+            $conn = $this->db->getConnection();
+            $dataAtual = date('Y-m-d');
+            $sql = "SELECT c.idcandidatura, c.dataInicio, c.dataFim, c.idturma, t.semestre, t.curso 
+                    FROM candidatura c 
+                    INNER JOIN turma t ON c.idturma = t.idturma
+                    WHERE c.dataInicio <= ? AND c.dataFim >= ? AND c.idturma = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$dataAtual, $dataAtual, $idturma]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Throwable $th) {
+            echo "<script>console.log('Listar candidaturas abertas por turma error: " . $th->getMessage() . "');</script>";
+            return [];
+        }
+    }
+
     public function excluirCandidatura(int $idcandidatura){
         try {
             $$conn = $this->db->getConnection();
