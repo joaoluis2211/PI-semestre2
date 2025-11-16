@@ -144,3 +144,5 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
 </body>
 </html>
 
+
+
