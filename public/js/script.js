@@ -5,7 +5,6 @@ btnVotar.forEach(button => {
     button.addEventListener('click', () =>{
         const botao = button;
         const idcandidatura = botao.dataset.candidatura;
-        echo ""
         const modalId = button.getAttribute('data-modal');
         const modal = document.getElementById(modalId);
 
@@ -14,24 +13,45 @@ btnVotar.forEach(button => {
         fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-          body: new URLSearchParams({idcandidatura })
+          body: new URLSearchParams({idcandidatura})
         })
         .then(res => res.json())
         .then(data => {
-          if (data.sucesso) {
+          if (data.sucesso && data.candidatos) {
+              // Preenche o modal com os candidatos
+              const listaCandidatos = document.getElementById('listaCandidatos');
+
+              data.candidatos.forEach(candidato => {
+                const card = document.createElement('div');
+                card.className = 'flex flex-col items-center gap-2 border-2 py-4 rounded-md w-56 snap-start shrink-0';
+                card.innerHTML = `
+                  <img class="w-40" src="../../../assets/user.png" alt="user">
+                  <p class="text-lg font-semibold">${htmlEscape(candidato.nome)}</p>
+                  `;
+                listaCandidatos.appendChild(card);
+              });
+
               modal.showModal();
           } else {
-            mostrarModal('Erro ao vizualizar candidatos.');
+            mostrarModal('Nenhum candidato encontrado.');
           }
         })
-        .catch(() => mostrarModal('Falha na comunicação com o servidor.'));
+        .catch((err) => {
+          console.error('Erro:', err);
+          mostrarModal('error');
+        });
         });
     });
     function mostrarModal(msg) {
       document.getElementById('mensagemModal').innerText = msg;
       document.getElementById('modalConfirmacao').style.display = 'flex';
     }
-  }
+    function htmlEscape(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+}
 
 const btnCandidatar = document.querySelectorAll('.candidatar')
 
@@ -72,7 +92,19 @@ const btnFechar = document.querySelectorAll('.cancelar');
         button.addEventListener('click', () =>{
             const modalId = button.getAttribute('data-modal');
             const modal = document.getElementById(modalId);
+            if (modalId === 'modal-candidatos') {
+            const listaCandidatos = document.getElementById('listaCandidatos');
+            if (listaCandidatos) {
+                listaCandidatos.innerHTML = ''; // Remove todos os cards
+            }
+            }
 
+            if (modalId === 'modal-formulario') {
+                const form = modal.querySelector('form');
+                if (form) {
+                    form.reset(); // Limpa inputs do formulário
+                }
+            }
             modal.close();
             
         });
@@ -208,7 +240,7 @@ function confirmarVotacao() {
     })
 }
 
-function excluirCandidatura() {
+/*function excluirCandidatura() {
     const botaoExcluirCandidatura = document.querySelectorAll(".excluirCandidatura")
     botaoExcluirCandidatura.forEach(button => {
     button.addEventListener('click', function(){
@@ -234,7 +266,7 @@ function excluirCandidatura() {
     });
     })
     })
-}
+}*/
 
 function excluirVotacao() {
     const botaoExcluirVotacao = document.querySelectorAll(".excluirVotacao")
@@ -271,7 +303,7 @@ function excluirVotacao() {
 })
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+/*document.addEventListener('DOMContentLoaded', () => {
   const btnCadastrar = document.querySelectorAll('.cadastrar');
   btnCadastrar.forEach(button => {
     const form = button.closest('form');
@@ -299,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
-});
+});*/
 
 function candidatar() {
 document.getElementById('btnCandidatar').addEventListener('click', function() {
@@ -345,4 +377,42 @@ function mostrarModal(msg) {
 
 function fecharModal() {
   document.getElementById('modalConfirmacao').style.display = 'none';
+}
+
+
+function excluirCandidatura() {
+const btnExcluirCandidatura = document.querySelectorAll('.excluirCandidatura');
+
+btnExcluirCandidatura.forEach(button => {
+    button.addEventListener('click', () =>{
+        const botao = button;
+        const idcandidatura = botao.dataset.candidatura;
+
+        const url = `/PI-semestre1/roteador.php?controller=Candidatura&acao=excluir`;
+  
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+          body: new URLSearchParams({idcandidatura})
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.sucesso) {
+            const card = document.getElementById(`candidatura-${idcandidatura}`);
+            if (card) card.remove();
+            mostrarModal('Excluido com sucesso.');
+          } else {
+            mostrarModal('Não foi possivel excluir a candidatura.');
+          }
+        })
+        .catch((err) => {
+          console.error('Erro:', err);
+          mostrarModal('error' . err);
+        });
+        });
+    });
+    function mostrarModal(msg) {
+      document.getElementById('mensagemModal').innerText = msg;
+      document.getElementById('modalConfirmacao').style.display = 'flex';
+    }
 }

@@ -38,7 +38,7 @@ class CandidatoDAO{
             $conn = $this->db->getConnection();
             $sql = "SELECT a.nome FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno where c.idcandidatura = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute($idcandidatura);
+            $stmt->execute([$idcandidatura]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Throwable $th) {
             echo "<script>console.log('Listar candidatos error: " . $th->getMessage() . "');</script>";
@@ -58,7 +58,19 @@ class CandidatoDAO{
         echo "<script>console.log('Verificar candidatura error: " . $th->getMessage() . "');</script>";
         return null;
     }
-}
+    }
 
+    public function removerAllCandidatos(int $idcandidatura){
+        try {
+            $conn = $this->db->getConnection();
+            $sql = "DELETE FROM candidato WHERE idcandidatura = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$idcandidatura]);
+            return true;
+        } catch (\Throwable $th) {
+            echo "<script>console.log('Excluir all candidatos error: " . $th->getMessage() . "');</script>";
+            return false;
+        }
+    }
 }
 ?>

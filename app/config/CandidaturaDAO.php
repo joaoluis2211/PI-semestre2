@@ -69,10 +69,10 @@ class CandidaturaDAO{
 
     public function excluirCandidatura(int $idcandidatura){
         try {
-            $$conn = $this->db->getConnection();
+            $conn = $this->db->getConnection();
             $sql = "DELETE FROM candidatura WHERE idcandidatura = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute($idcandidatura);
+            $stmt->execute([$idcandidatura]);
             return true;
         } catch (\Throwable $th) {
             echo "<script>console.log('Excluir candidatura error: " . $th->getMessage() . "');</script>";

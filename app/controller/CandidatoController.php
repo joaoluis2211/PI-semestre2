@@ -38,13 +38,30 @@ class CandidatoController {
         }
     }
 
-    public function listar(){
+    public function deleteAll(int $idcandidatura){
+        try {
+            return $this->candidatoDAO->removerAllCandidatos($idcandidatura);
+        } catch (Exception $e) {
+            echo "<script>console.log('Erro ao remover candidatos: " . $e->getMessage() . "');</script>";
+        }
+    }
+
+    public function listar() {
         try {
             $idcandidatura = $_POST['idcandidatura'] ?? null;
-            $this->candidatoDAO->listarCandidatos($idcandidatura);
-            echo json_encode(['sucesso' => true]);
+
+            $candidatos = $this->candidatoDAO->listarCandidatos($idcandidatura);
+
+            echo json_encode([
+                'sucesso' => true,
+                'candidatos' => $candidatos
+            ]);
         } catch (Exception $e) {
-            echo "<script>console.log('Erro ao listar candidatos: " . $e->getMessage() . "');</script>";
+            echo json_encode([
+                'sucesso' => false,
+                'erro' => 'Erro ao listar candidatos.',
+                'detalhes' => $e->getMessage()
+            ]);
         }
     }
 

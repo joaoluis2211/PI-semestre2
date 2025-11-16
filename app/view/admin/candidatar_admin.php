@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -32,7 +35,7 @@
     </script>
 </head>
 
-<body class="flex flex-col min-h-screen font-sans bg-white text-black" onload="excluirCandidatura(), votar()">
+<body class="flex flex-col min-h-screen font-sans bg-white text-black" onload="votar(), excluirCandidatura()">
     <nav class="flex flex-col bg-white max-h-max justify-between items-center">
         <div class="flex items-center w-full justify-between">
             <a href="home_admin.html"><img class="max-w-48" src="../../../assets/logo-fatec.png" alt="logo fatec"></a>
@@ -68,12 +71,12 @@
             $candidaturas = $candidaturaController->listarCandidaturas();
             foreach ($candidaturas as $candidatura):
             ?>
-            <div class="flex flex-col border px-12 py-6 shadow-md mb-10 w-max mx-auto min-h-[200px]">
+            <div id="candidatura-<?= $candidatura['idcandidatura'] ?>" class="flex flex-col border px-12 py-6 shadow-md mb-10 w-max mx-auto min-h-[200px]">
                 <h2 class="text-2xl font-semibold mb-1">Candidatura para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
             <?= htmlspecialchars($candidatura['curso']) ?></h2>
                 <p class="mx-auto mb-8">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFim'])) ?> 19:45</p>
                 <div class="flex">
-                    <button id="excluirCandidatura" class="mx-auto w-max p-3 rounded-lg bg-white outline border-gray-300 text-xl font-semibold text-gray-300 mt-auto" type="button">EXCLUIR CANDIDATURA</button>
+                    <button data-candidatura="<?= htmlspecialchars($candidatura['idcandidatura']) ?>" class="excluirCandidatura mx-auto w-max p-3 rounded-lg bg-white outline border-gray-300 text-xl font-semibold text-gray-300 mt-auto" type="button">EXCLUIR CANDIDATURA</button>
                     <button  data-candidatura="<?= htmlspecialchars($candidatura['idcandidatura']) ?>" class="votar mx-auto w-max p-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white mt-auto" data-modal="modal-candidatos" type="button">VIZUALIZAR CANDIDATURA</button>
                 </div>
             </div>
@@ -125,41 +128,15 @@
     </dialog>
 
     <dialog id="modal-candidatos">
-        <div class="flex flex-col p-5 gap-6 max-w-[900px]">
-            <div class="flex">
-                <h2 class="mx-auto text-2xl font-bold">Alunos candidatos a representante de turma</h2>
+        <div class="flex flex-col p-5 gap-6 max-w-[900px] min-w-[700px]">
+            <div class="flex w-auto gap-16">
+                <h2 class="mx-auto w-auto text-2xl font-bold">Alunos candidatos a representante de turma</h2>
                 <button class="absolute right-4 cancelar w-8 bg-[#b20000] rounded-md" data-modal="modal-candidatos"><img class="h-8 mx-auto" src="../../../assets/cancelar.png" alt="botão cancelar"></button>
             </div>
-            <?php
-            //require_once __DIR__ . '/../../controller/CandidatoController.php';
-            //$candidatoController = new CandidatoController();
-            //$candidatos = $candidatoController->listarCandidatos($idcandidatura);
-            //foreach ($candidatos as $candidato):
-            ?>
             <div class="flex gap-4 overflow-x-auto pb-3 pl-4 pr-4 scroll-pl-4 snap-x">
-
-                <div class="flex flex-col items-center gap-2 border-2 py-4 rounded-md w-56 snap-start shrink-0">
-                    <img class="w-40" src="../../../assets/user.png" alt="">
-                    <!--<p class="text-lg font-semibold"><?= htmlspecialchars($candidato['nome']) ?></p>-->
+                <div id="listaCandidatos" class="flex m-auto">
                 </div>
-
-                <div class="flex flex-col items-center gap-2 border-2 py-4 rounded-md w-56 snap-start shrink-0">
-                    <img class="w-40" src="../../../assets/user.png" alt="">
-                    <p class="text-lg font-semibold">Nome Completo</p>
-                </div>
-
-                <div class="flex flex-col items-center gap-2 border-2 py-4 rounded-md w-56 snap-start shrink-0">
-                    <img class="w-40" src="../../../assets/user.png" alt="">
-                    <p class="text-lg font-semibold">Nome Completo</p>
-                </div>
-
-                <div class="flex flex-col items-center gap-2 border-2 py-4 rounded-md w-56 snap-start shrink-0">
-                    <img class="w-40" src="../../../assets/user.png" alt="">
-                    <p class="text-lg font-semibold">Nome Completo</p>
-                </div>
-
             </div>
-          <?php //endforeach; ?>
         </div>
     </dialog>
 

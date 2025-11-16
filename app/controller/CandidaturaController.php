@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/CandidaturaDAO.php';
+require_once __DIR__ . '/CandidatoController.php';
 require_once __DIR__ . '/../model/Candidatura.php';
 require_once __DIR__ . '/../model/Turma.php';
 require_once __DIR__ . '/TurmaController.php';
@@ -55,6 +56,25 @@ class CandidaturaController {
         } catch (Exception $e) {
             echo "<script>console.log('Erro ao listar candidaturas abertas por turma: " . $e->getMessage() . "');</script>";
             return [];
+        }
+    }
+
+    public function excluir(){
+        try {
+            $idcandidatura = $_POST['idcandidatura'] ?? null;
+            $candidatoController = new CandidatoController();
+            $resp = $candidatoController->deleteAll($idcandidatura);
+            if ($resp) {
+                $resp2 = $this->candidaturaDAO->excluirCandidatura($idcandidatura);
+                if ($resp2) {
+                    echo json_encode(['sucesso' => true]);
+                }else{
+                    echo json_encode(['sucesso' => false]);
+                }
+            }
+        } catch (Exception $e) {
+            echo "console.error('Erro ao excluir candidaturas" . $e->getMessage() . "')";
+            return false;
         }
     }
 }
