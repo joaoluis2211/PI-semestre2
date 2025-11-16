@@ -88,7 +88,7 @@ class UsuarioController {
                 $alunoController = new AlunoController();
                 $alunoController->atualizarTurma($aluno, $idturma);
             }
-            header('Location: app/view/usuario/home.html');
+            header('Location: app/view/usuario/home.php');
         }
             return $user;
         } catch (Exception $e) {
