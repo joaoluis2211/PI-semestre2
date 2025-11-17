@@ -43,8 +43,8 @@ session_start();
         </div>
         <div class="flex w-full justify-center items-center h-12 bg-[#b20000]">
             <ul class="flex items-center gap-16 text-white text-xl">
-                <li><a class="hover:text-black" href="home_admin.html">Início</a></li>
-                <li><a class="hover:text-black" href="voto_admin.html">Votação</a></li>
+                <li><a class="hover:text-black" href="home_admin.php">Início</a></li>
+                <li><a class="hover:text-black" href="voto_admin.php">Votação</a></li>
                 <li><a class="hover:text-black" href="candidatar_admin.php">Candidatar</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
                 <li><a class="hover:text-black" href="notificacao_admin.html">Notificações</a></li>

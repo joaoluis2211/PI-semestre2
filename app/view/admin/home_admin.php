@@ -1,3 +1,19 @@
+<?php
+require_once __DIR__ . '/../../controller/EleicaoController.php';
+session_start();
+
+
+$eleicaoController = new EleicaoController();
+$candidaturas = $eleicaoController->listarCandidaturas();
+$dataAtual = date('Y-m-d');
+foreach ($candidaturas as $candidatura){
+    echo ($candidatura['dataFimCandidatura']);
+    if ($candidatura['dataFimCandidatura'] < $dataAtual) {
+        $eleicaoController->abrirVotacao($candidatura['ideleicao']);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

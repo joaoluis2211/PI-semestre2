@@ -64,31 +64,17 @@ class UsuarioController {
         try {
             $this->usuario->setEmail(isset($_POST['email']) ? trim($_POST['email']) : '');
             $this->usuario->setSenha(isset($_POST['senha']) ? $_POST['senha'] : '');
-            $user = $this->usuarioDAO->iniciarSessao($this->usuario->getEmail(), $this->usuario->getSenha());
-            $_SESSION['user'] = $user;
+            $user = $this->usuarioDAO->iniciarSessao($this->usuario->getEmail(), $this->usuario->getSenha());         
             if (!$user) {
                 $_SESSION['erro'] = 'E‑mail ou senha inválidos.';
                 header('Location: index.php');
                 exit;
             }
+            $_SESSION['user'] = $user;
             if ($_SESSION['user']->getTipo() === 'administrador') {
                 header('Location: app/view/admin/home_admin.html');
                 exit;
             } elseif ($_SESSION['user']->getTipo() === 'aluno') {
-                $aluno = $this->getAlunoUsuario($user);
-                $turmaController = new TurmaController();
-                $turma = new Turma();
-                $turma = $turmaController->procurarTurma($aluno->getIdturma());
-                $mes = date('m');
-                $semestre = $turma->getSemestre();
-                if ($mes == 1 || $mes == 7 && $semestre <= 6 ) {
-                    echo $mes;
-                    $semestre += 1;
-                    $turma->setSemestre($semestre);
-                    $idturma = $turmaController->getIdTurma($turma);
-                    $alunoController = new AlunoController();
-                    $alunoController->atualizarTurma($aluno, $idturma);
-                }
                 header('Location: app/view/usuario/home.php');
                 exit;
             }

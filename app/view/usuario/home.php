@@ -12,8 +12,16 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$usuario = $_SESSION['user'];
 $eleicaoController = new EleicaoController();
+$candidaturas = $eleicaoController->listarCandidaturas();
+$dataAtual = date('Y-m-d');
+foreach ($candidaturas as $candidatura){
+    if ($candidatura['dataFimCandidatura'] < $dataAtual) {
+        $eleicaoController->abrirVotacao($candidatura['ideleicao']);
+    }
+}
+
+$usuario = $_SESSION['user'];
 $votacaoController = new VotacaoController();
 $alunoController = new AlunoController();
 
@@ -27,7 +35,7 @@ $votacoesAbertas = [];
 
 if ($idturma) {
     $candidaturasAbertas = $eleicaoController->listarCandidaturasAbertasPorTurma($idturma);
-    $votacoesAbertas = $votacaoController->listarVotacoesAbertasPorTurma($idturma);
+    $votacoesAbertas = $eleicaoController->listarVotacoesAbertasPorTurma($idturma);
 }
 
 $temCandidaturasAbertas = !empty($candidaturasAbertas);
@@ -82,11 +90,10 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>
     </nav>
-    
-    <main class="flex flex-col items-center justify-center my-auto py-10">
+    <main class="flex flex-col items-center justify-center py-10">
         <?php if ($temAlgoAberto): ?>
             <!-- Exibir informações quando há candidaturas ou votações abertas -->
-            <div class="flex flex-col items-center gap-8 w-full max-w-4xl px-4">
+            <div class="flex flex-col items-center h-min gap-8 w-full max-w-[1200px] px-4">
                 <?php if ($temVotacoesAbertas): ?>
                     <?php foreach ($votacoesAbertas as $votacao): ?>
                         <div class="flex flex-col border px-12 py-6 shadow-md w-full">
@@ -96,12 +103,10 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
                                 <?= htmlspecialchars($votacao['curso']) ?>
                             </p>
                             <p class="text-lg mb-4 text-center text-gray-600">
-                                Disponível até: <?= date('d/m/Y', strtotime($votacao['dataFim'])) ?> 19:45
+                                Disponível até: <?= date('d/m/Y', strtotime($votacao['dataFimVotacao'])) ?> 19:45
                             </p>
-                            <a href="voto.html">
-                                <button class="mx-auto w-full max-w-xs py-4 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">
-                                    IR VOTAR
-                                </button>
+                            <a href="voto.html" class="mx-auto w-full max-w-xs py-4 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white text-center">
+                                 IR VOTAR
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -109,19 +114,17 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
 
                 <?php if ($temCandidaturasAbertas): ?>
                     <?php foreach ($candidaturasAbertas as $candidatura): ?>
-                        <div class="flex flex-col border px-12 py-6 shadow-md w-full">
+                        <div class="flex flex-col border p-8 shadow-md w-full h-full">
                             <h2 class="text-3xl font-bold mb-4 text-center">Candidaturas Abertas!</h2>
                             <p class="text-xl font-semibold mb-2 text-center">
                                 Candidatura para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
                                 <?= htmlspecialchars($candidatura['curso']) ?>
                             </p>
                             <p class="text-lg mb-4 text-center text-gray-600">
-                                Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFim'])) ?> 19:45
+                                Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?> 19:45
                             </p>
-                            <a href="candidatar.php">
-                                <button class="mx-auto w-full max-w-xs py-4 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">
-                                    CANDIDATAR-SE
-                                </button>
+                            <a href="candidatar.php" class="mx-auto w-full max-w-xs py-4 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white text-center">
+                                CANDIDATAR-SE
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -137,7 +140,7 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
         <?php endif; ?>
     </main>
 
-    <footer class="bg-black flex justify-center items-center py-3 gap-4">
+    <footer class="bg-black flex justify-center items-center py-3 gap-4 mt-auto">
         <img class="max-w-[150px]" src="../../../assets/logo-sem-fundo-branca.png" alt="logo ELEJA">
         <p class="text-white text-base pt-2">&copy; Todos os direitos reservados ao grupo <b>ELEJA.</b></p>
     </footer>

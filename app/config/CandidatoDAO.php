@@ -36,7 +36,7 @@ class CandidatoDAO{
     public function listarCandidatos(int $ideleicao){
         try {
             $conn = $this->db->getConnection();
-            $sql = "SELECT a.nome FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno where c.ideleicao = ?";
+            $sql = "SELECT a.nome, c.qtdVotos FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno where c.ideleicao = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$ideleicao]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

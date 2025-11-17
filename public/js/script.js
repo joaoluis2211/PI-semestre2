@@ -7,6 +7,7 @@ btnVotar.forEach(button => {
         const ideleicao = botao.dataset.ideleicao;
         const modalId = button.getAttribute('data-modal');
         const modal = document.getElementById(modalId);
+        const tipo = botao.dataset.tipo;
 
         const url = `/PI-semestre1/roteador.php?controller=Candidato&acao=listar`;
   
@@ -28,6 +29,14 @@ btnVotar.forEach(button => {
                   <img class="w-40" src="../../../assets/user.png" alt="user">
                   <p class="text-lg font-semibold">${htmlEscape(candidato.nome)}</p>
                   `;
+
+                if (tipo === "VOTAÇÃO") {
+                  const votos = document.createElement('p');
+                  votos.textContent = `Votos: ${candidato.qtdVotos}`;
+                  card.appendChild(votos);
+                }
+
+                
                 listaCandidatos.appendChild(card);
               });
 

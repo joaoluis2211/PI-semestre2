@@ -24,7 +24,7 @@ class EleicaoController {
             $dataFimCandidatura = isset($_POST['dataFimCandidatura']) ? trim($_POST['dataFimCandidatura']) : '';
             $dataInicioVotacao = isset($_POST['dataInicioVotacao']) ? trim($_POST['dataInicioVotacao']) : '';
             $dataFimVotacao = isset($_POST['dataFimVotacao']) ? trim($_POST['dataFimVotacao']) : '';
-            $status = 'candidatura';
+            $status = 'CANDIDATURA';
             $eleicao = new Eleicao();
             $eleicao->setDataInicioCandidatura($dataInicioCandidatura);
             $eleicao->setDataFimCandidatura($dataFimCandidatura);
@@ -36,6 +36,7 @@ class EleicaoController {
             return $this->eleicaoDAO->cadastrarEleicao($eleicao);
         } catch (Exception $e) {
             echo "<script>console.log('Erro ao cadastrar eleicao: " . $e->getMessage() . "');</script>";
+            return null;
         }
     }
 
@@ -44,6 +45,7 @@ class EleicaoController {
             return $this->eleicaoDAO->listarCandidaturas();
         } catch (Exception $e) {
             echo "<script>console.log('Erro ao listar candidaturas: " . $e->getMessage() . "');</script>";
+            return [];
         }
     }
 
@@ -55,20 +57,21 @@ class EleicaoController {
         }
     }
 
-    public function listarCandidaturasAbertas(){
-        try {
-            return $this->eleicaoDAO->listarCandidaturasAbertas();
-        } catch (Exception $e) {
-            echo "<script>console.log('Erro ao listar candidaturas abertas: " . $e->getMessage() . "');</script>";
-            return [];
-        }
-    }
 
     public function listarCandidaturasAbertasPorTurma(int $idturma){
         try {
             return $this->eleicaoDAO->listarCandidaturasAbertasPorTurma($idturma);
         } catch (Exception $e) {
             echo "<script>console.log('Erro ao listar candidaturas abertas por turma: " . $e->getMessage() . "');</script>";
+            return [];
+        }
+    }
+
+    public function listarVotacoesAbertasPorTurma(int $idturma){
+        try {
+            return $this->eleicaoDAO->listarVotacoesAbertasPorTurma($idturma);
+        } catch (Exception $e) {
+            echo "<script>console.log('Erro ao listar votações abertas por turma: " . $e->getMessage() . "');</script>";
             return [];
         }
     }
@@ -88,6 +91,15 @@ class EleicaoController {
             }
         } catch (Exception $e) {
             echo "console.error('Erro ao excluir candidaturas" . $e->getMessage() . "')";
+            return false;
+        }
+    }
+
+    public function abrirVotacao(int $ideleicao){
+        try {
+            return $this->eleicaoDAO->abrirVotacao($ideleicao);
+        } catch (Exception $e) {
+            echo "console.error('Erro ao abrir votacao" . $e->getMessage() . "')";
             return false;
         }
     }
