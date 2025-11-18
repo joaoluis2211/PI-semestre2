@@ -30,13 +30,13 @@ class UsuarioController {
 
             if (empty($aluno->getNome()) || empty($this->usuario->getEmail()) || empty($this->usuario->getSenha()) || empty($turma->getSemestre())) {
                 $_SESSION['erro'] = 'Por favor, preencha todos os campos obrigatórios.';
-                header('Location: app/view/usuario/cadastrarView.php');
+                header('Location: app/view/usuario/cadastrar.php');
                 exit;
             }
             $emailExists = $this->usuarioDAO->verificarEmailExiste($this->usuario->getEmail());
             if ($emailExists === true) {
                 $_SESSION['erro'] = 'E‑mail já cadastrado.';
-                header('Location: app/view/usuario/cadastrarView.php');
+                header('Location: app/view/usuario/cadastrar.php');
                 exit;
             }
 
@@ -72,7 +72,7 @@ class UsuarioController {
             }
             $_SESSION['user'] = $user;
             if ($_SESSION['user']->getTipo() === 'administrador') {
-                header('Location: app/view/admin/home_admin.html');
+                header('Location: app/view/admin/home_admin.php');
                 exit;
             } elseif ($_SESSION['user']->getTipo() === 'aluno') {
                 header('Location: app/view/usuario/home.php');

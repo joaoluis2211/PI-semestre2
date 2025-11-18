@@ -32,7 +32,7 @@ class EleicaoController {
             $eleicao->setDataFimVotacao($dataFimVotacao);
             $eleicao->setStatus($status);
             $eleicao->setIdturma($idturma);
-            header("Location: app/view/admin/candidatar_admin.php");
+            header("Location: app/view/admin/candidaturas_admin.php");
             return $this->eleicaoDAO->cadastrarEleicao($eleicao);
         } catch (Exception $e) {
             echo "<script>console.log('Erro ao cadastrar eleicao: " . $e->getMessage() . "');</script>";

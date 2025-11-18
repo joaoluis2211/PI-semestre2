@@ -57,7 +57,7 @@
         <a href="#" class="text-sm font-semibold text-[#b20000] hover:underline block mb-4">Esqueceu sua senha?</a>
 
         <button type="submit" class="w-full bg-[#b20000] hover:bg-red-500 text-white font-semibold py-3 rounded mb-4">ENTRAR</button>
-        <a href="app/view/usuario/cadastrarView.php"><button type="button" class="w-full bg-[#091113] text-white hover:bg-opacity-90 font-semibold py-3 rounded">CADASTRAR-SE</button></a>
+        <a href="app/view/usuario/cadastrar.php"><button type="button" class="w-full bg-[#091113] text-white hover:bg-opacity-90 font-semibold py-3 rounded">CADASTRAR-SE</button></a>
       </form>
 
       <footer class="mt-6">

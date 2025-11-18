@@ -48,18 +48,18 @@ foreach ($candidaturas as $candidatura){
 <body class="flex flex-col min-h-screen font-sans bg-white text-black">
     <nav class="flex flex-col bg-white max-h-max justify-between items-center">
         <div class="flex items-center w-full justify-between">
-            <a href="home_admin.html"><img class="max-w-48" src="../../../assets/logo-fatec.png" alt="logo fatec"></a>
+            <a href="home_admin.php"><img class="max-w-48" src="../../../assets/logo-fatec.png" alt="logo fatec"></a>
             <img src="../../../assets/logo-cps.png" class="max-w-48" alt="logo cps">
         </div>
         <div class="flex w-full justify-center items-center h-12 bg-[#b20000]">
             <ul class="flex items-center gap-16 text-white text-xl">
-                <li><a class="hover:text-black" href="home_admin.html">Início</a></li>
-                <li><a class="hover:text-black" href="voto_admin.html">Votação</a></li>
-                <li><a class="hover:text-black" href="candidatar_admin.php">Candidatar</a></li>
+                <li><a class="hover:text-black" href="home_admin.php">Início</a></li>
+                <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
+                <li><a class="hover:text-black" href="candidaturas_admin.php">Candidaturas</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
                 <li><a class="hover:text-black" href="notificacao_admin.html">Notificações</a></li>
             </ul>
-            <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.html">Sair</a>
+            <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>
     </nav>
     
@@ -67,8 +67,8 @@ foreach ($candidaturas as $candidatura){
         <img class="w-[100px] mb-12" src="../../../assets/team-management.png" alt="">
         <P class="text-5xl font-semibold mb-4">Bem-vindo ao painel de controle</P>
         <div class="flex flex-col md:flex-row items-center justify-center gap-6 mt-6">
-            <a href="candidatar_admin.php"><button class="w-[20rem] py-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl font-semibold text-white" type="button">GERENCIAR CANDIDATURAS</button></a>
-            <a href="voto_admin.html"><button class="w-[20rem] py-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl font-semibold text-white" type="button">GERENCIAR VOTAÇÕES</button></a>
+            <a href="candidaturas_admin.php"><button class="w-[20rem] py-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl font-semibold text-white" type="button">GERENCIAR CANDIDATURAS</button></a>
+            <a href="votacao_admin.php"><button class="w-[20rem] py-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl font-semibold text-white" type="button">GERENCIAR VOTAÇÕES</button></a>
         </div>
     </main>
 

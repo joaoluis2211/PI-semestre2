@@ -82,8 +82,8 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
         <div class="flex w-full justify-center items-center h-12 bg-[#b20000]">
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home.php">Início</a></li>
-                <li><a class="hover:text-black" href="voto.html">Votação</a></li>
-                <li><a class="hover:text-black" href="candidatar.php">Candidatar</a></li>
+                <li><a class="hover:text-black" href="votacao.php">Votações</a></li>
+                <li><a class="hover:text-black" href="candidaturas.php">Candidaturas</a></li>
                 <li><a class="hover:text-black" href="regulamento.html">Regulamento</a></li>
                 <li><a class="hover:text-black" href="notificacao.html">Notificações</a></li>
             </ul>
@@ -105,7 +105,7 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
                             <p class="text-lg mb-4 text-center text-gray-600">
                                 Disponível até: <?= date('d/m/Y', strtotime($votacao['dataFimVotacao'])) ?> 19:45
                             </p>
-                            <a href="voto.html" class="mx-auto w-full max-w-xs py-4 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white text-center">
+                            <a href="votacao.php" class="mx-auto w-full max-w-xs py-4 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white text-center">
                                  IR VOTAR
                             </a>
                         </div>
@@ -123,7 +123,7 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
                             <p class="text-lg mb-4 text-center text-gray-600">
                                 Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?> 19:45
                             </p>
-                            <a href="candidatar.php" class="mx-auto w-full max-w-xs py-4 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white text-center">
+                            <a href="candidaturas.php" class="mx-auto w-full max-w-xs py-4 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white text-center">
                                 CANDIDATAR-SE
                             </a>
                         </div>

@@ -38,18 +38,18 @@ session_start();
 <body class="flex flex-col font-sans bg-white text-black min-h-screen" onload="excluirVotacao(), votar()">
     <nav class="flex flex-col bg-white max-h-max justify-between items-center">
         <div class="flex items-center w-full justify-between">
-            <a href="home_admin.html"><img class="max-w-48" src="../../../assets/logo-fatec.png" alt="logo fatec"></a>
+            <a href="home_admin.php"><img class="max-w-48" src="../../../assets/logo-fatec.png" alt="logo fatec"></a>
             <img src="../../../assets/logo-cps.png" class="max-w-48" alt="logo cps">
         </div>
         <div class="flex w-full justify-center items-center h-12 bg-[#b20000]">
             <ul class="flex items-center gap-16 text-white text-xl">
-                <li><a class="hover:text-black" href="home_admin.html">Início</a></li>
-                <li><a class="hover:text-black" href="voto_admin.php">Votação</a></li>
-                <li><a class="hover:text-black" href="candidatar_admin.php">Candidatar</a></li>
+                <li><a class="hover:text-black" href="home_admin.php">Início</a></li>
+                <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
+                <li><a class="hover:text-black" href="candidaturas_admin.php">Candidaturas</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
                 <li><a class="hover:text-black" href="notificacao_admin.html">Notificações</a></li>
             </ul>
-            <a class="hover:text-black text-white text-xl absolute right-6" href="../index.html">Sair</a>
+            <a class="hover:text-black text-white text-xl absolute right-6" href="../index.php">Sair</a>
         </div>
     </nav>  
     
@@ -94,7 +94,7 @@ session_start();
                         <p>Data de Encerramento: 16/05/2025 ás 19:45</p>
                     </div>
                     <div>
-                        <a href="resultado_admin.html"><button class="w-[14rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">VER RESULTADO</button></a>
+                        <a href="resultado_admin.php"><button class="w-[14rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">VER RESULTADO</button></a>
                     </div>
                 </div>
             </div>

@@ -41,12 +41,12 @@
         <div class="flex w-full justify-center items-center h-12 bg-[#b20000]">
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home.php">Início</a></li>
-                <li><a class="hover:text-black" href="voto.html">Votação</a></li>
-                <li><a class="hover:text-black" href="candidatar.php">Candidatar</a></li>
+                <li><a class="hover:text-black" href="votacao.php">Votações</a></li>
+                <li><a class="hover:text-black" href="candidaturas.php">Candidaturas</a></li>
                 <li><a class="hover:text-black" href="regulamento.html">Regulamento</a></li>
                 <li><a class="hover:text-black" href="notificacao.html">Notificações</a></li>
             </ul>
-            <a class="hover:text-black text-white text-xl absolute right-6" href="../index.html">Sair</a>
+            <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>
     </nav>
 
