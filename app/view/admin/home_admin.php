@@ -7,7 +7,6 @@ $eleicaoController = new EleicaoController();
 $candidaturas = $eleicaoController->listarCandidaturas();
 $dataAtual = date('Y-m-d');
 foreach ($candidaturas as $candidatura){
-    echo ($candidatura['dataFimCandidatura']);
     if ($candidatura['dataFimCandidatura'] < $dataAtual) {
         $eleicaoController->abrirVotacao($candidatura['ideleicao']);
     }
@@ -55,7 +54,7 @@ foreach ($candidaturas as $candidatura){
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home_admin.php">Início</a></li>
                 <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
-                <li><a class="hover:text-black" href="candidaturas_admin.php">Candidaturas</a></li>
+                <li><a class="hover:text-black" href="candidaturas_admin.php">Eleições</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
                 <li><a class="hover:text-black" href="notificacao_admin.html">Notificações</a></li>
             </ul>
@@ -64,11 +63,11 @@ foreach ($candidaturas as $candidatura){
     </nav>
     
     <main class="flex flex-col items-center justify-between my-auto">
-        <img class="w-[100px] mb-12" src="../../../assets/team-management.png" alt="">
-        <P class="text-5xl font-semibold mb-4">Bem-vindo ao painel de controle</P>
+        <img class="w-[100px] md:w-[80px] md:mb-8 mb-12" src="../../../assets/team-management.png" alt="">
+        <P class="text-5xl md:text-3xl font-semibold mb-4">Bem-vindo ao painel de controle</P>
         <div class="flex flex-col md:flex-row items-center justify-center gap-6 mt-6">
-            <a href="candidaturas_admin.php"><button class="w-[20rem] py-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl font-semibold text-white" type="button">GERENCIAR CANDIDATURAS</button></a>
-            <a href="votacao_admin.php"><button class="w-[20rem] py-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl font-semibold text-white" type="button">GERENCIAR VOTAÇÕES</button></a>
+            <a href="candidaturas_admin.php"><button class="w-[20rem] md:w-[18rem] p-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl md:text-base font-semibold text-white" type="button">GERENCIAR ELEIÇÕES</button></a>
+            <a href="votacao_admin.php"><button class="w-[20rem] md:w-[18rem] p-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl md:text-base font-semibold text-white" type="button">GERENCIAR VOTAÇÕES</button></a>
         </div>
     </main>
 

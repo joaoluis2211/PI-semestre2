@@ -434,12 +434,12 @@ document.getElementById('btnCandidatar').addEventListener('click', function() {
     if (data.sucesso) {
       if (acao === 'cadastrar') {
         btn.innerText = 'REMOVER CANDIDATURA';
-        btn.className = 'mx-auto w-[14rem] py-4 rounded-lg text-xl font-semibold text-white mt-auto bg-gray-600 hover:bg-gray-700'
+        btn.className = 'mx-auto w-[14rem] md:text-base py-4 rounded-lg text-xl font-semibold text-white mt-auto bg-gray-600 hover:bg-gray-700'
         btn.dataset.candidatado = "true";
         mostrarModal('Candidatura confirmada com sucesso!');
       } else {
         btn.innerText = 'CANDIDATAR-SE';
-        btn.className = 'mx-auto w-[14rem] py-4 rounded-lg text-xl font-semibold text-white mt-auto bg-[#b20000] hover:bg-red-600'
+        btn.className = 'mx-auto w-[14rem] md:text-base py-4 rounded-lg text-xl font-semibold text-white mt-auto bg-[#b20000] hover:bg-red-600'
         btn.dataset.candidatado = "false";
         mostrarModal('Candidatura removida.');
       }

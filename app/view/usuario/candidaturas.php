@@ -58,7 +58,7 @@
     
     <main class="flex flex-col h-auto items-center mb-auto py-14">
         
-        <div class="flex flex-col w-full min-h-max border-gray-400 justify-center mb-8">
+        <div class="flex flex-col w-full md:max-w-[1200px] min-h-max border-gray-400 justify-center mb-8">
 
             <?php
             require_once __DIR__ . '/../../controller/EleicaoController.php';
@@ -77,15 +77,15 @@
             foreach ($candidaturas as $candidatura):
                 $jaCandidatado = $candidatoController->verificarCandidaturaExistente($aluno->getIdaluno(), $candidatura['ideleicao']);
             ?>
-            <div class="flex flex-col border px-12 py-6 shadow-md mb-10 w-max mx-auto min-h-[200px]">
-                <h2 class="text-2xl font-semibold mb-1">Candidatura para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
+            <div class="flex flex-col border px-12 py-6 shadow-md mb-10 max-w-[800px] mx-auto min-h-[200px]">
+                <h2 class="text-2xl md:text-center md:text-xl font-semibold mb-1">Candidatura para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
             <?= htmlspecialchars($candidatura['curso']) ?></h2>
                 <p class="mx-auto mb-4">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?> 19:45</p>
                 <button id="btnCandidatar"
                     data-aluno="<?= htmlspecialchars($aluno->getIdaluno()) ?>"
                     data-eleicao="<?= htmlspecialchars($candidatura['ideleicao']) ?>"
                     data-candidatado=<?= $jaCandidatado ? 'true' : 'false'?>
-                    class="mx-auto w-[14rem] py-4 rounded-lg text-xl font-semibold text-white mt-auto
+                    class="mx-auto w-[14rem] md:text-base py-4 rounded-lg text-xl font-semibold text-white mt-auto
                     <?= $jaCandidatado ? 'bg-gray-600 hover:bg-gray-700' : 'bg-[#b20000] hover:bg-red-600' ?>"
                     type="button"><?= $jaCandidatado ? 'REMOVER CANDIDATURA' : 'CANDIDATAR-SE'?></button>
             </div>

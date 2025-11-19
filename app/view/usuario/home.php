@@ -133,7 +133,7 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
         <?php else: ?>
             <!-- Exibir mensagem quando não há nada aberto -->
             <div class="flex flex-col items-center">
-                <h1 class="text-5xl font-bold mb-2">No momento nenhuma candidatura ou votação está aberta!</h1>
+                <h1 class="text-5xl md:text-3xl md:mb-4 font-bold mb-2">No momento nenhuma candidatura ou votação está aberta!</h1>
                 <p class="text-xl font-medium mb-7 text-gray-500">(Você receberá uma notificacão assim que algo estiver disponivel)</p>
                 <button class="mx-auto w-max p-3 rounded-lg bg-white outline border-gray-300 text-xl font-semibold text-gray-300 mt-auto" type="button" disabled>NENHUMA AÇÃO DISPONIVEL</button>
             </div>

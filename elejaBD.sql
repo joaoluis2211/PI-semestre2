@@ -61,6 +61,28 @@ constraint fk_aluno_voto foreign key (idaluno) references aluno (idaluno),
 constraint fk_candidato_voto foreign key (idcandidato) references candidato (idcandidato)
 );
 
+INSERT INTO usuario (email, senha, tipo) values ('administrador@gmail.com', '123', 'administrador');
+
+INSERT INTO turma (semestre, curso) values ('1', 'Desenvolvimento de Software Multiplataforma');
+INSERT INTO turma (semestre, curso) values ('2', 'Desenvolvimento de Software Multiplataforma');
+INSERT INTO turma (semestre, curso) values ('3', 'Desenvolvimento de Software Multiplataforma');
+INSERT INTO turma (semestre, curso) values ('4', 'Desenvolvimento de Software Multiplataforma');
+INSERT INTO turma (semestre, curso) values ('5', 'Desenvolvimento de Software Multiplataforma');
+INSERT INTO turma (semestre, curso) values ('6', 'Desenvolvimento de Software Multiplataforma');
+
+INSERT INTO turma (semestre, curso) values ('1', 'Gestão de Produção Industrial');
+INSERT INTO turma (semestre, curso) values ('2', 'Gestão de Produção Industrial');
+INSERT INTO turma (semestre, curso) values ('3', 'Gestão de Produção Industrial');
+INSERT INTO turma (semestre, curso) values ('4', 'Gestão de Produção Industrial');
+INSERT INTO turma (semestre, curso) values ('5', 'Gestão de Produção Industrial');
+INSERT INTO turma (semestre, curso) values ('6', 'Gestão de Produção Industrial');
+
+INSERT INTO turma (semestre, curso) values ('1', 'Gestão Empresarial');
+INSERT INTO turma (semestre, curso) values ('2', 'Gestão Empresarial');
+INSERT INTO turma (semestre, curso) values ('3', 'Gestão Empresarial');
+INSERT INTO turma (semestre, curso) values ('4', 'Gestão Empresarial');
+INSERT INTO turma (semestre, curso) values ('5', 'Gestão Empresarial');
+INSERT INTO turma (semestre, curso) values ('6', 'Gestão Empresarial');
 
 
 

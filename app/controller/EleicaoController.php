@@ -19,11 +19,28 @@ class EleicaoController {
         
             $turmaController = new TurmaController();
             $idturma = $turmaController->getIdTurma($turma);
-
+            $dataAtual = date('d-m-Y');
             $dataInicioCandidatura = isset($_POST['dataInicioCandidatura']) ? trim($_POST['dataInicioCandidatura']) : '';
             $dataFimCandidatura = isset($_POST['dataFimCandidatura']) ? trim($_POST['dataFimCandidatura']) : '';
             $dataInicioVotacao = isset($_POST['dataInicioVotacao']) ? trim($_POST['dataInicioVotacao']) : '';
             $dataFimVotacao = isset($_POST['dataFimVotacao']) ? trim($_POST['dataFimVotacao']) : '';
+            if ($dataInicioCandidatura < $dataAtual) {
+                echo "<script>alert('Data de inicio da eleição invalida!')</script>";
+                header('Location: app/view/admin/candidaturas_admin.php');
+                exit;
+            }elseif ($dataFimCandidatura < $dataInicioCandidatura){
+                echo "<script>alert('Data final da eleição invalida!')</script>";
+                header('Location: app/view/admin/candidaturas_admin.php');
+                exit;
+            }elseif ($dataInicioVotacao < $dataFimCandidatura){
+                echo "<script>alert('Data de inicio da votação invalida!')</script>";
+                header('Location: app/view/admin/candidaturas_admin.php');
+                exit;
+            }elseif ($dataFimVotacao < $dataInicioVotacao){
+                echo "<script>alert('Data finak da votação invalida!')</script>";
+                header('Location: app/view/admin/candidaturas_admin.php');
+                exit;
+            }
             $status = 'CANDIDATURA';
             $eleicao = new Eleicao();
             $eleicao->setDataInicioCandidatura($dataInicioCandidatura);
