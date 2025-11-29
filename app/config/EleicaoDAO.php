@@ -110,5 +110,19 @@ class EleicaoDAO{
             return false;
         }
     }
+
+    public function encerrarVotacao(int $ideleicao){
+        try {
+            $conn = $this->db->getConnection();
+            $sql = "UPDATE eleicao SET status = 'ENCERRADA' where ideleicao = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$ideleicao]);
+            return true;
+        } catch (\Throwable $th) {
+            echo "<script>console.log('Encerrar votação error: " . $th->getMessage() . "');</script>";
+            return false;
+        }
+    }
+    
 }
 ?>

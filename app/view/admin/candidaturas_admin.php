@@ -71,7 +71,7 @@ session_start();
             $candidaturas = $eleicaoController->listarCandidaturas();
             foreach ($candidaturas as $candidatura):
             ?>
-            <div id="candidatura-<?= $candidatura['ideleicao'] ?>" class="flex flex-col border px-12 py-6 shadow-md mb-10 w-max md:max-w-[1000px] mx-auto min-h-[200px]">
+            <div id="candidatura-<?= $candidatura['ideleicao'] ?>" class="flex flex-col border px-12 py-6 shadow-md mb-10 w-full md:max-w-[1000px] mx-auto min-h-[200px]">
                 <h2 class="text-2xl md:text-xl md:text-center font-semibold mb-1">Eleição para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
             <?= htmlspecialchars($candidatura['curso']) ?></h2>
                 <p class="mx-auto mb-8">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?> 19:45</p>
@@ -141,7 +141,7 @@ session_start();
                 <button class="absolute right-4 cancelar w-8 bg-[#b20000] rounded-md" data-modal="modal-candidatos"><img class="h-8 mx-auto" src="../../../assets/cancelar.png" alt="botão cancelar"></button>
             </div>
             <div class="flex gap-4 overflow-x-auto pb-3 pl-4 pr-4 scroll-pl-4 snap-x">
-                <div id="listaCandidatos" class="flex m-auto">
+                <div id="listaCandidatos" class="flex m-auto gap-2">
                 </div>
             </div>
         </div>

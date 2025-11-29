@@ -10,6 +10,9 @@ foreach ($candidaturas as $candidatura){
     if ($candidatura['dataFimCandidatura'] < $dataAtual) {
         $eleicaoController->abrirVotacao($candidatura['ideleicao']);
     }
+    if ($candidatura['dataFimVotacao'] < $dataAtual) {
+        $eleicaoController->encerrarVotacao($candidatura['ideleicao']);
+    }
 }
 ?>
 

@@ -66,10 +66,10 @@ session_start();
         $votacoes = $eleicaoController->listarVotacoes();
         foreach ($votacoes as $votacao):
         ?>
-        <div class="grid gap-6 grid-flow-row w-max justify-center">
+        <div class="grid gap-6 grid-flow-row w-full justify-center">
 
             <div id="votacao-<?= $votacao['ideleicao'] ?>" class="border px-12 py-6 shadow-md">
-                <h2 class="text-xl font-semibold">Eleição para representante de sala do <?= htmlspecialchars($votacao['semestre']) ?>º Semestre / 
+                <h2 class="text-xl font-semibold max-w-[52rem]">Eleição para representante de sala do <?= htmlspecialchars($votacao['semestre']) ?>º Semestre / 
             <?= htmlspecialchars($votacao['curso']) ?></h2>
                 <div class="flex justify-between items-center">
                     <div class="flex flex-col gap-1 mt-1">

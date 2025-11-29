@@ -26,7 +26,7 @@ btnVotar.forEach(button => {
 
               data.candidatos.forEach(candidato => {
                 const card = document.createElement('div');
-                card.className = 'flex flex-col items-center gap-2 border-2 py-4 rounded-md w-56 snap-start shrink-0';
+                card.className = 'flex flex-col items-center gap-4 border-2 w-max p-4 rounded-md min-w-[12rem] snap-start shrink-0';
                 card.innerHTML = `
                   <img class="w-40" src="../../../assets/user.png" alt="user">
                   <p class="text-lg font-semibold">${htmlEscape(candidato.nome)}</p>

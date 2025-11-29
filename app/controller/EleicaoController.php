@@ -24,7 +24,7 @@ class EleicaoController {
             $dataFimCandidatura = isset($_POST['dataFimCandidatura']) ? trim($_POST['dataFimCandidatura']) : '';
             $dataInicioVotacao = isset($_POST['dataInicioVotacao']) ? trim($_POST['dataInicioVotacao']) : '';
             $dataFimVotacao = isset($_POST['dataFimVotacao']) ? trim($_POST['dataFimVotacao']) : '';
-            if ($dataInicioCandidatura < $dataAtual) {
+            /*if ($dataInicioCandidatura < $dataAtual) {
                 echo "<script>alert('Data de inicio da eleição invalida!')</script>";
                 header('Location: app/view/admin/candidaturas_admin.php');
                 exit;
@@ -40,7 +40,7 @@ class EleicaoController {
                 echo "<script>alert('Data finak da votação invalida!')</script>";
                 header('Location: app/view/admin/candidaturas_admin.php');
                 exit;
-            }
+            }*/
             $status = 'CANDIDATURA';
             $eleicao = new Eleicao();
             $eleicao->setDataInicioCandidatura($dataInicioCandidatura);
@@ -117,6 +117,15 @@ class EleicaoController {
             return $this->eleicaoDAO->abrirVotacao($ideleicao);
         } catch (Exception $e) {
             echo "console.error('Erro ao abrir votacao" . $e->getMessage() . "')";
+            return false;
+        }
+    }
+
+    public function encerrarVotacao(int $ideleicao){
+        try {
+            return $this->eleicaoDAO->encerrarVotacao($ideleicao);
+        } catch (Exception $e) {
+            echo "console.error('Erro ao encerrar votacao" . $e->getMessage() . "')";
             return false;
         }
     }
