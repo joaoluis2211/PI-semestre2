@@ -32,10 +32,11 @@ btnVotar.forEach(button => {
                   <p class="text-lg font-semibold">${htmlEscape(candidato.nome)}</p>
                   `;
 
-                if (tipo === "VOTAÇÃO") {
+                if (tipo === "VOTACAO") {
                   const votos = document.createElement('p');
                   votos.textContent = `Votos: ${candidato.qtdVotos}`;
                   card.appendChild(votos);
+                  
                 }
 
                 if (tipo === "VOTAR") {
@@ -66,6 +67,59 @@ btnVotar.forEach(button => {
                 listaCandidatos.appendChild(card);
               });
 
+              if (tipo === "VOTACAO") {
+
+                  const cardNulo = document.createElement('div');
+                  cardNulo.className = 
+                      'flex flex-col items-center gap-4 border-2 w-max p-4 rounded-md min-w-[12rem] snap-start shrink-0 bg-gray-100';
+
+                  cardNulo.innerHTML = `
+                      <img class="w-40 opacity-40" src="../../../assets/user.png" alt="user">
+                      <p class="text-lg font-semibold text-red-600">VOTOS NULOS</p>
+                      <p class="text-lg font-semibold">Total: ${data.votosNulos}</p>
+                  `;
+
+                  listaCandidatos.appendChild(cardNulo);
+              }
+
+              if (tipo === "VOTAR") {
+                                  const cardNulo = document.createElement('div');
+              cardNulo.className = 'flex flex-col items-center gap-4 border-2 w-max p-4 rounded-md min-w-[12rem] snap-start shrink-0 bg-gray-100';
+
+              cardNulo.innerHTML = `
+                <img class="w-40 opacity-40" src="../../../assets/user.png" alt="user">
+                <p class="text-lg font-semibold text-red-600">VOTO NULO</p>
+              `;
+
+              // input radio
+              const radioNulo = document.createElement('input');
+              radioNulo.type = "radio";
+              radioNulo.name = "candidatoEscolhido";
+              radioNulo.value = "NULO"; // <- identificador importante
+              radioNulo.className = "w-4 h-4 text-red-600";
+
+              // quando selecionado
+              radioNulo.addEventListener('change', () => {
+                  window.candidatoSelecionado = 'NULO';
+              });
+
+              // rótulo
+              const labelNulo = document.createElement('label');
+              labelNulo.textContent = "Selecionar";
+              labelNulo.className = "text-black text-lg font-medium";
+
+              const wrapNulo = document.createElement('div');
+              wrapNulo.className = "flex items-center gap-2";
+
+              wrapNulo.appendChild(radioNulo);
+              wrapNulo.appendChild(labelNulo);
+
+              cardNulo.appendChild(wrapNulo);
+
+              // adiciona ao modal
+              listaCandidatos.appendChild(cardNulo);
+              }
+              
               modal.showModal();
           } else {
             mostrarModal('Nenhum candidato encontrado.');
@@ -114,6 +168,7 @@ const btnConfirmarVoto = document.querySelectorAll('.confirmarVoto');
 btnConfirmarVoto.forEach(button => {
     button.addEventListener('click', () =>{
         const botao = button;
+        const ideleicao = botao.dataset.ideleicao;
         const idaluno = botao.dataset.idaluno;
         const idcandidato = window.candidatoSelecionado;
         const modalId = botao.getAttribute('data-modal');
@@ -129,7 +184,7 @@ btnConfirmarVoto.forEach(button => {
         fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-          body: new URLSearchParams({idcandidato, idaluno})
+          body: new URLSearchParams({idcandidato, idaluno, ideleicao})
         })
         .then(res => res.json())
         .then(data => {

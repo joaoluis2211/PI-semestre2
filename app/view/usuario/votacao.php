@@ -142,7 +142,7 @@
                 <div id="listaCandidatos" class="flex m-auto gap-4"></div>
 
             </div>
-            <button data-idaluno="<?= htmlspecialchars($usuario->getIdaluno()) ?>" data-modal="modal-candidatos" class="confirmarVoto mx-auto w-[16rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">VOTAR</button>
+            <button data-ideleicao="<?= htmlspecialchars($votacao['ideleicao']) ?>" data-idaluno="<?= htmlspecialchars($usuario->getIdaluno()) ?>" data-modal="modal-candidatos" class="confirmarVoto mx-auto w-[16rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">VOTAR</button>
         </div>
     </dialog>
 

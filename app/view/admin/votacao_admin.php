@@ -84,7 +84,6 @@ if ($usuario->getTipo() != 'administrador') {
                         <p>Data de Encerramento: <?= date('d/m/Y', strtotime($votacao['dataFimVotacao'])) ?></p>
                     </div>
                     <div class="flex items-center justify-center gap-6">
-                        <button class="excluirVotacao w-max  rounded-lg bg-white outline -outline-offset-1 outline-gray-300" type="button"><img class="w-11" src="../../../assets/lixo.svg" alt="lixo"></button>
                         <button data-tipo="<?= htmlspecialchars($votacao['status']) ?>" data-ideleicao="<?= htmlspecialchars($votacao['ideleicao']) ?>" class="votar w-[14rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" data-modal="modal-candidatos" type="button">VIZUALIZAR</button>
                     </div>
                 </div>

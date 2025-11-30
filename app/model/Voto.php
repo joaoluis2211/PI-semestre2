@@ -2,12 +2,9 @@
 
 class Voto{
     private int $id;
-    private Aluno $aluno;
-    private Candidato $candidato;
+    private int $idaluno;
+    private int $idcandidato;
+    private int $ideleicao;
 
-    public function __construct(Aluno $aluno, Candidato $candidato)
-    {
-        $this->aluno = $aluno;
-        $this->candidato = $candidato;
-    }
+    
 }

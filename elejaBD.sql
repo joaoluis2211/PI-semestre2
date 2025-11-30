@@ -59,8 +59,10 @@ constraint fk_eleicao_ata foreign key (ideleicao) references eleicao (ideleicao)
 create table voto(
 idvoto int primary key auto_increment not null,
 idaluno int not null,
-idcandidato int not null,
+idcandidato int null,
+ideleicao int not null,
 constraint fk_aluno_voto foreign key (idaluno) references aluno (idaluno),
+constraint fk_eleicao_voto foreign key (ideleicao) references eleicao (ideleicao),
 constraint fk_candidato_voto foreign key (idcandidato) references candidato (idcandidato)
 );
 

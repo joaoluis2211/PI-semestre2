@@ -12,8 +12,7 @@ class VotoDAO{
         $conn = $this->db->getConnection();
         $sql = "SELECT 1
                 FROM voto v
-                INNER JOIN candidato c ON v.idcandidato = c.idcandidato
-                INNER JOIN eleicao e ON e.ideleicao = c.ideleicao
+                INNER JOIN eleicao e ON e.ideleicao = v.ideleicao
                 WHERE e.ideleicao = ? AND v.idaluno = ?
                 LIMIT 1";
 
@@ -31,12 +30,12 @@ class VotoDAO{
     }
 }
 
-    public function votar(int $idaluno, int $idcandidato){
+    public function votar($idaluno, $idcandidato, $ideleicao){
         try {
             $conn = $this->db->getConnection();
-            $sql = "INSERT INTO voto (idaluno, idcandidato) values (?, ?) ";
+            $sql = "INSERT INTO voto (idaluno, idcandidato, ideleicao) values (?, ?, ?) ";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$idaluno, $idcandidato]);
+            $stmt->execute([$idaluno, $idcandidato, $ideleicao]);
             return true;
         } catch (\Throwable $th) {
             echo "<script>console.log('Votar error: " . $th->getMessage() . "');</script>";

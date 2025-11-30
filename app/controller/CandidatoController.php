@@ -49,12 +49,14 @@ class CandidatoController {
     public function listar() {
         try {
             $ideleicao = $_POST['ideleicao'] ?? null;
+            $votosNulos = $this->candidatoDAO->contarVotosNulos($ideleicao);
 
             $candidatos = $this->candidatoDAO->listarCandidatos($ideleicao);
 
             echo json_encode([
                 'sucesso' => true,
-                'candidatos' => $candidatos
+                'candidatos' => $candidatos,
+                'votosNulos' => $votosNulos
             ]);
         } catch (Exception $e) {
             echo json_encode([

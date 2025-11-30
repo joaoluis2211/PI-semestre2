@@ -22,8 +22,10 @@ class VotoController {
         try {
             $idaluno = $_POST['idaluno'] ?? null;
             $idcandidato = $_POST['idcandidato'] ?? null;
-            $votou = $this->votoDAO->votar($idaluno, $idcandidato);
-            if ($votou) {
+            $idcandidato = $idcandidato === 'NULO' ? null : $idcandidato;
+            $ideleicao = $_POST['ideleicao'] ?? null;
+            $votou = $this->votoDAO->votar($idaluno, $idcandidato, $ideleicao);
+            if ($votou and $idcandidato !== null) {
                 $candidatoController = new CandidatoController();
                 $candidato = $candidatoController->getCandidato($idcandidato);
                 $candidato->incrementarVoto();

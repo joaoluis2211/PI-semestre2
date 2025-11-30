@@ -99,5 +99,19 @@ class CandidatoDAO{
             return null;
         }
     }
+
+    public function contarVotosNulos($ideleicao) {
+    try {
+        $conn = $this->db->getConnection();
+        $sql = "SELECT COUNT(*) AS total FROM voto 
+                WHERE ideleicao = ? AND idcandidato IS NULL";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ideleicao]);
+        return $stmt->fetchColumn();
+    } catch (\Throwable $th) {
+        echo "<script>console.log('Contar votos nulos error: " . $th->getMessage() . "');</script>";
+        return 0;
+}
+}
 }
 ?>
