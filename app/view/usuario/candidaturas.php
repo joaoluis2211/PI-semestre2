@@ -42,9 +42,8 @@
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home.php">Início</a></li>
                 <li><a class="hover:text-black" href="votacao.php">Votações</a></li>
-                <li><a class="hover:text-black" href="candidaturas.php">Candidaturas</a></li>
+                <li><a class="hover:text-black" href="candidaturas.php">Eleições</a></li>
                 <li><a class="hover:text-black" href="regulamento.html">Regulamento</a></li>
-                <li><a class="hover:text-black" href="notificacao.html">Notificações</a></li>
             </ul>
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>
@@ -52,7 +51,7 @@
 
     <div class="w-full flex h-20 border-b border-gray-400 shadow-sm items-center justify-center">
         <div class="flex relative items-center">
-            <h1 class="text-3xl font-bold">CANDIDATURAS</h1>
+            <h1 class="text-3xl font-bold">ELEIÇÕES</h1>
         </div>
     </div>
     
@@ -78,7 +77,7 @@
                 $jaCandidatado = $candidatoController->verificarCandidaturaExistente($aluno->getIdaluno(), $candidatura['ideleicao']);
             ?>
             <div class="flex flex-col border px-12 py-6 shadow-md mb-10 max-w-[800px] mx-auto min-h-[200px]">
-                <h2 class="text-2xl md:text-center md:text-xl font-semibold mb-1">Candidatura para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
+                <h2 class="text-2xl md:text-center md:text-xl font-semibold mb-1">Eleição para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
             <?= htmlspecialchars($candidatura['curso']) ?></h2>
                 <p class="mx-auto mb-4">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?> 19:45</p>
                 <button id="btnCandidatar"

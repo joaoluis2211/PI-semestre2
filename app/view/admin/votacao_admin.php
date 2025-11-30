@@ -1,5 +1,11 @@
 <?php
+require_once __DIR__ . '/../../model/Usuario.php'; // 
 session_start();
+$usuario = $_SESSION['user'];
+if ($usuario->getTipo() != 'administrador') {
+    header("Location: ../../../index.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -35,7 +41,7 @@ session_start();
     </script>
 </head>
 
-<body class="flex flex-col font-sans bg-white text-black min-h-screen" onload="excluirVotacao(), votar()">
+<body class="flex flex-col font-sans bg-white text-black min-h-screen" onload="excluirVotacao(), votar(), resultado()">
     <nav class="flex flex-col bg-white max-h-max justify-between items-center">
         <div class="flex items-center w-full justify-between">
             <a href="home_admin.php"><img class="max-w-48" src="../../../assets/logo-fatec.png" alt="logo fatec"></a>
@@ -45,11 +51,10 @@ session_start();
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home_admin.php">Início</a></li>
                 <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
-                <li><a class="hover:text-black" href="candidaturas_admin.php">Candidaturas</a></li>
+                <li><a class="hover:text-black" href="candidaturas_admin.php">Eleições</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
-                <li><a class="hover:text-black" href="notificacao_admin.html">Notificações</a></li>
             </ul>
-            <a class="hover:text-black text-white text-xl absolute right-6" href="../index.php">Sair</a>
+            <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>
     </nav>  
     
@@ -65,6 +70,7 @@ session_start();
         $eleicaoController = new EleicaoController();
         $votacoes = $eleicaoController->listarVotacoes();
         foreach ($votacoes as $votacao):
+            if ($votacao['status'] == 'VOTACAO'):
         ?>
         <div class="grid gap-6 grid-flow-row w-full justify-center">
 
@@ -83,21 +89,27 @@ session_start();
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
-
+        <?php endif;
+            if ($votacao['status'] == 'ENCERRADA'):
+        ?>
             <div class="border px-12 py-4 shadow-md">
-                <h2 class="text-xl font-semibold">Eleição para representante de turma - Primeiro Semestre/DSM</h2>
+                <h2 class="text-xl font-semibold">Eleição para representante de sala do <?= htmlspecialchars($votacao['semestre']) ?>º Semestre / 
+            <?= htmlspecialchars($votacao['curso']) ?></h2>
                 <div class="flex justify-between gap-16 items-center">
                     <div>
-                        <p>Situação: Encerrada/Disponivel</p>
-                        <p>Data de inicio: 16/05/2025 ás 19:45</p>
-                        <p>Data de Encerramento: 16/05/2025 ás 19:45</p>
+                        <p>Situação: <?= htmlspecialchars($votacao['status']) ?></p>
+                        <p>Data de inicio: <?= date('d/m/Y', strtotime($votacao['dataInicioVotacao'])) ?></p>
+                        <p>Data de Encerramento: <?= date('d/m/Y', strtotime($votacao['dataFimVotacao'])) ?></p>
                     </div>
                     <div>
-                        <a href="resultado_admin.php"><button class="w-[14rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">VER RESULTADO</button></a>
+                        <button data-tipo="<?= htmlspecialchars($usuario->getTipo()) ?>" data-idturma="<?= htmlspecialchars($votacao['idturma']) ?>" data-ideleicao="<?= htmlspecialchars($votacao['ideleicao']) ?>" class="resultado w-[14rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">VER RESULTADO</button>
                     </div>
                 </div>
             </div>
+
+            <?php endif;
+            endforeach; ?>
+
         </div>
     </main>
 

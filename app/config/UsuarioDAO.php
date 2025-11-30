@@ -30,7 +30,7 @@ class UsuarioDAO {
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute([$email, $senha]);
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($row > 0) {
+            if ($row) {
                 $usuario = new Usuario();
                 $usuario->setId($row['idusuario']);
                 $usuario->setEmail($row['email']);

@@ -10,9 +10,9 @@ class AlunoDAO{
     public function cadastrarAluno(Aluno $aluno){
         try {
             $conn = $this->db->getConnection();
-            $sql = "INSERT INTO aluno (nome, idturma) VALUES (?, ?)";
+            $sql = "INSERT INTO aluno (nome, idturma, ra) VALUES (?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$aluno->getNome(), $aluno->getIdturma()]);
+            $stmt->execute([$aluno->getNome(), $aluno->getIdturma(), $aluno->getRa()]);
             return true;
         } catch (\Throwable $th) {
             echo "<script>console.log('Cadastrar aluno error: " . $th->getMessage() . "');</script>";
@@ -74,6 +74,20 @@ class AlunoDAO{
             return $aluno;
         } catch (Exception $e) {
             echo "<script>console.log('Localizar turma error: " . $e->getMessage() . "');</script>";
+            return null;
+        }
+    }
+
+    public function getAlunoPorTurma(int $idturma){
+        try {
+            $conn = $this->db->getConnection();
+            $sql = "SELECT * FROM aluno WHERE idturma = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$idturma]);
+            $alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $alunos;
+        } catch (\Throwable $th) {
+            echo "<script>console.log('Pegar alunos por turma error: " . $th->getMessage() . "');</script>";
             return null;
         }
     }

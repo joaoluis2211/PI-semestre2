@@ -93,6 +93,15 @@ class EleicaoController {
         }
     }
 
+    public function listarVotacoesEncerradasPorTurma(int $idturma){
+        try {
+            return $this->eleicaoDAO->listarVotacoesEncerradasPorTurma($idturma);
+        } catch (Exception $e) {
+            echo "<script>console.log('Erro ao listar votações encerradas por turma: " . $e->getMessage() . "');</script>";
+            return [];
+        }
+    }
+
     public function excluir(){
         try {
             $ideleicao = $_POST['ideleicao'] ?? null;
@@ -127,6 +136,23 @@ class EleicaoController {
         } catch (Exception $e) {
             echo "console.error('Erro ao encerrar votacao" . $e->getMessage() . "')";
             return false;
+        }
+    }
+
+    public function candidatosPorVotos(int $ideleicao){
+        try {
+            return $this->eleicaoDAO->candidatosPorVotos($ideleicao);
+        } catch (Exception $e) {
+            echo "console.error('Erro ao pegar os candidatos por quantidade de votos" . $e->getMessage() . "')";
+            return false;
+        }
+    }
+
+    public function listarAlunosVotacao(int $ideleicao){
+        try {
+            return $this->eleicaoDAO->listarAlunosVotacao($ideleicao);
+        } catch (Exception $e) {
+            echo "<script>console.log('Erro ao listar alunos que votaram: " . $e->getMessage() . "');</script>";
         }
     }
 }

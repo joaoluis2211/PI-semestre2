@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../controller/EleicaoController.php';
-require_once __DIR__ . '/../../controller/VotacaoController.php';
 require_once __DIR__ . '/../../controller/AlunoController.php';
+require_once __DIR__ . '/../../controller/AtaController.php';
 require_once __DIR__ . '/../../model/Usuario.php';
 
 session_start();
@@ -13,19 +13,39 @@ if (!isset($_SESSION['user'])) {
 }
 
 $eleicaoController = new EleicaoController();
+$ataController = new AtaController();
 $candidaturas = $eleicaoController->listarCandidaturas();
+$votacoes = $eleicaoController->listarVotacoes();
 $dataAtual = date('Y-m-d');
 foreach ($candidaturas as $candidatura){
     if ($candidatura['dataFimCandidatura'] < $dataAtual) {
         $eleicaoController->abrirVotacao($candidatura['ideleicao']);
     }
-    if ($candidatura['dataFimVotacao'] < $dataAtual) {
-        $eleicaoController->encerrarVotacao($candidatura['ideleicao']);
+}
+foreach ($votacoes as $votacao) {
+
+    if ($votacao['dataFimVotacao'] < $dataAtual) {
+
+        // 1. Encerrar votação
+        $eleicaoController->encerrarVotacao($votacao['ideleicao']);
+
+        // 2. Só gerar ATA se ainda não existir
+        $ataExistente = $ataController->obterAta(
+            $votacao['ideleicao'],
+            $votacao['idturma']
+        );
+
+        if (!$ataExistente) {
+            // gera somente UMA VEZ
+            $ataController->gerarAta(
+                $votacao['ideleicao'],
+                $votacao['idturma']
+            );
+        }
     }
 }
 
 $usuario = $_SESSION['user'];
-$votacaoController = new VotacaoController();
 $alunoController = new AlunoController();
 
 // Buscar informações do aluno
@@ -86,9 +106,8 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home.php">Início</a></li>
                 <li><a class="hover:text-black" href="votacao.php">Votações</a></li>
-                <li><a class="hover:text-black" href="candidaturas.php">Candidaturas</a></li>
+                <li><a class="hover:text-black" href="candidaturas.php">Eleições</a></li>
                 <li><a class="hover:text-black" href="regulamento.html">Regulamento</a></li>
-                <li><a class="hover:text-black" href="notificacao.html">Notificações</a></li>
             </ul>
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>
@@ -118,9 +137,9 @@ $temAlgoAberto = $temCandidaturasAbertas || $temVotacoesAbertas;
                 <?php if ($temCandidaturasAbertas): ?>
                     <?php foreach ($candidaturasAbertas as $candidatura): ?>
                         <div class="flex flex-col border p-8 shadow-md w-full h-full">
-                            <h2 class="text-3xl font-bold mb-4 text-center">Candidaturas Abertas!</h2>
+                            <h2 class="text-3xl font-bold mb-4 text-center">Eleições Abertas!</h2>
                             <p class="text-xl font-semibold mb-2 text-center">
-                                Candidatura para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
+                                Eleição para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
                                 <?= htmlspecialchars($candidatura['curso']) ?>
                             </p>
                             <p class="text-lg mb-4 text-center text-gray-600">

@@ -49,6 +49,10 @@
         <input type="text" id="nome" name="nome" required
           class="w-full px-4 py-2 border border-gray-300 rounded mb-4" />
 
+        <label for="ra" class="block mb-1">Ra:</label>
+        <input type="number" id="ra" name="ra" required
+          class="w-full px-4 py-2 border border-gray-300 rounded mb-4" />
+
         <label for="curso" class="block mb-1">Curso:</label>
         <select class="w-full px-4 py-3 border border-gray-300 rounded mb-4" name="curso">
             <option value="Desenvolvimento de Software Multiplataforma">Desenvolvimento de Software Multiplataforma</option>

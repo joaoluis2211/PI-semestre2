@@ -47,7 +47,6 @@ session_start();
                 <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
                 <li><a class="hover:text-black" href="candidaturas_admin.php">Eleições</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
-                <li><a class="hover:text-black" href="notificacao_admin.html">Notificações</a></li>
             </ul>
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>

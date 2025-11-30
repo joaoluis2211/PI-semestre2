@@ -20,6 +20,7 @@ class UsuarioController {
             $turma = new Turma();
 
             $aluno->setNome(isset($_POST['nome']) ? trim($_POST['nome']) : '');
+            $aluno->setRa(isset($_POST['ra']) ? (int)$_POST['ra'] : 0);
 
             $this->usuario->setEmail(isset($_POST['email']) ? trim($_POST['email']) : '');
             $this->usuario->setSenha(isset($_POST['senha']) ? $_POST['senha'] : '');

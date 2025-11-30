@@ -1,17 +1,39 @@
 <?php
 require_once __DIR__ . '/../../controller/EleicaoController.php';
+require_once __DIR__ . '/../../controller/AtaController.php';
 session_start();
 
 
 $eleicaoController = new EleicaoController();
+$ataController = new AtaController();
 $candidaturas = $eleicaoController->listarCandidaturas();
+$votacoes = $eleicaoController->listarVotacoes();
 $dataAtual = date('Y-m-d');
 foreach ($candidaturas as $candidatura){
     if ($candidatura['dataFimCandidatura'] < $dataAtual) {
         $eleicaoController->abrirVotacao($candidatura['ideleicao']);
     }
-    if ($candidatura['dataFimVotacao'] < $dataAtual) {
-        $eleicaoController->encerrarVotacao($candidatura['ideleicao']);
+}
+foreach ($votacoes as $votacao) {
+
+    if ($votacao['dataFimVotacao'] < $dataAtual) {
+
+        // 1. Encerrar votação
+        $eleicaoController->encerrarVotacao($votacao['ideleicao']);
+
+        // 2. Só gerar ATA se ainda não existir
+        $ataExistente = $ataController->obterAta(
+            $votacao['ideleicao'],
+            $votacao['idturma']
+        );
+
+        if (!$ataExistente) {
+            // gera somente UMA VEZ
+            $ataController->gerarAta(
+                $votacao['ideleicao'],
+                $votacao['idturma']
+            );
+        }
     }
 }
 ?>
@@ -59,14 +81,13 @@ foreach ($candidaturas as $candidatura){
                 <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
                 <li><a class="hover:text-black" href="candidaturas_admin.php">Eleições</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
-                <li><a class="hover:text-black" href="notificacao_admin.html">Notificações</a></li>
             </ul>
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>
     </nav>
     
     <main class="flex flex-col items-center justify-between my-auto">
-        <img class="w-[100px] md:w-[80px] md:mb-8 mb-12" src="../../../assets/team-management.png" alt="">
+        <img class="max-w-[100px] md:mb-8 mb-12" src="../../../assets/team-management.png" alt="">
         <P class="text-5xl md:text-3xl font-semibold mb-4">Bem-vindo ao painel de controle</P>
         <div class="flex flex-col md:flex-row items-center justify-center gap-6 mt-6">
             <a href="candidaturas_admin.php"><button class="w-[20rem] md:w-[18rem] p-3 rounded-lg bg-[#b20000] hover:bg-[#a00000] text-xl md:text-base font-semibold text-white" type="button">GERENCIAR ELEIÇÕES</button></a>

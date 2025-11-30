@@ -4,6 +4,7 @@ class Aluno {
     private int $idaluno;
     private string $nome;
     private int $idturma;
+    private int $ra;
 
 
     public function getIdaluno(): int
@@ -34,5 +35,15 @@ class Aluno {
     public function setIdturma(int $idturma): void
     {
         $this->idturma = $idturma;
+    }
+
+    public function getRa(): int
+    {
+        return $this->ra;
+    }
+
+    public function setRa(int $ra): void
+    {
+        $this->ra = $ra;
     }
 }

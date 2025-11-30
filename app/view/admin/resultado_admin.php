@@ -1,3 +1,12 @@
+<?php
+require_once __DIR__ . '/../../model/Usuario.php'; // 
+session_start();
+$usuario = $_SESSION['user'];
+if ($usuario->getTipo() != 'administrador') {
+    header("Location: ../../../index.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -28,7 +37,13 @@
         }
     </script>
 </head>
-
+<?php
+require_once __DIR__ . '/../../controller/EleicaoController.php';
+$ideleicao = isset($_GET['ideleicao']) ? (int)$_GET['ideleicao'] : 0;
+$idturma = isset($_GET['idturma']) ? (int)$_GET['idturma'] : 0;
+$eleicaoController = new EleicaoController();
+$candidatos = $eleicaoController->candidatosPorVotos($ideleicao);
+?>
 <body class="font-sans bg-white text-black">
     <nav class="flex flex-col bg-white max-h-max justify-between items-center">
         <div class="flex items-center w-full justify-between">
@@ -51,290 +66,50 @@
                     <div class="flex flex-col items-center p-3">
                         <img class="max-w-[200px]" src="../../../assets/user.png" alt="representante">
                         <h2 class="text-xl font-semibold">Representante</h2>
-                        <p class="text-lg">Thiago Henrique</p>
-                        <p class="text-lg">20 votos</p>
+                        <p class="text-md"><?= htmlspecialchars($candidatos[0]['nome']) ?></p>
+                        <p class="text-md"><?= htmlspecialchars($candidatos[0]['qtdVotos']) ?></p>
                     </div>
                     <div class="flex flex-col items-center p-3">
                         <img class="max-w-[150px]" src="../../../assets/user.png" alt="representante">
                         <h2 class="text-xl font-semibold">Vice-representante</h2>
-                        <p class="text-lg">Emanuel da Silva</p>
-                        <p class="text-lg">8 votos</p>
+                        <p class="text-md"><?= htmlspecialchars($candidatos[1]['nome']) ?></p>
+                        <p class="text-md"><?= htmlspecialchars($candidatos[1]['qtdVotos']) ?></p>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="flex flex-col py-8 items-center gap-8">
             <h2 class="text-2xl font-bold">LISTA DE ALUNOS</h2>
-            <div class="grid grid-flow-col grid-rows-10 gap-x-4 gap-y-2">
-
+            <div class="grid gap-x-4 gap-y-2">
+            <?php
+            $alunos = $eleicaoController->listarAlunosVotacao($ideleicao);
+            foreach ($alunos as $aluno):
+            ?>
                 <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
                     <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
+                    <div class="flex justify-between flex-1 gap-2">
+                        <p class="text-base min-w-[200px] "><?= htmlspecialchars($aluno['nome']) ?></p>
+                        <p class="text-base min-w-[200px] text-center"><?= htmlspecialchars($aluno['semestre']) ?> período</p>
+                        <p class="text-base min-w-[200px] "><?= htmlspecialchars($aluno['curso']) ?></p>
                     </div>
                     <div class="flex items-center gap-1">
                         <label class="text-base" for="Voto">Voto -</label>
                         <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
                     </div>
                 </div>
-
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
-                                
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
-                    <div class="flex gap-8">
-                        <p class="text-base">José Ferreira</p>
-                        <p class="text-base">1 período</p>
-                        <p class="text-base">DSM</p>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <label class="text-base" for="Voto">Voto -</label>
-                        <input class="h-4 w-4" type="checkbox" name="checkbox" checked>
-                    </div>
-                </div>
+        <?php endforeach; ?>
                 
             </div>
-            <button class="w-[14rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white">IMPRIMIR PDF</button>
+            <a 
+ href="gerarAta.php?ideleicao=<?= $ideleicao ?>&idturma=<?= $idturma ?>" 
+ class="w-[14rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white text-center">
+    GERAR ATA
+</a>
         </div>
     </main>
 
 
-    <footer class="bg-black flex justify-center items-center py-3 gap-4">
+    <footer class="bg-black flex justify-center items-center py-3 gap-4 mt-auto">
         <img class="max-w-[150px]" src="../../../assets/logo-sem-fundo-branca.png" alt="logo ELEJA">
         <p class="text-white text-base pt-2">&copy; Todos os direitos reservados ao grupo <b>ELEJA.</b></p>
     </footer>

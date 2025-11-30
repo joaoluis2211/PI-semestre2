@@ -37,9 +37,9 @@ class EleicaoDAO{
         try {
             $conn = $this->db->getConnection();
             $sql = "SELECT e.ideleicao, e.dataInicioVotacao, e.dataFimVotacao, e.status,
-                    t.semestre, t.curso 
+                    t.semestre, t.curso, e.idturma
                     FROM eleicao e 
-                    INNER JOIN turma t ON e.idturma = t.idturma where e.status = 'VOTAÇÃO'";
+                    INNER JOIN turma t ON e.idturma = t.idturma where e.status = 'VOTAÇÃO' OR e.status = 'ENCERRADA'";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -85,6 +85,23 @@ class EleicaoDAO{
         }
     }
 
+    public function listarVotacoesEncerradasPorTurma(int $idturma){
+        try {
+            $conn = $this->db->getConnection();
+            $sql = "SELECT e.ideleicao, e.dataInicioVotacao, e.dataFimVotacao, 
+                           e.idturma, e.status, t.semestre, t.curso 
+                    FROM eleicao e  
+                    INNER JOIN turma t ON e.idturma = t.idturma
+                    WHERE  e.idturma = ? and e.status = 'ENCERRADA'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$idturma]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Throwable $th) {
+            echo "<script>console.log('Listar votações encerradas por turma error: " . $th->getMessage() . "');</script>";
+            return [];
+        }
+    }
+
     public function excluirCandidatura(int $ideleicao){
         try {
             $conn = $this->db->getConnection();
@@ -120,6 +137,32 @@ class EleicaoDAO{
             return true;
         } catch (\Throwable $th) {
             echo "<script>console.log('Encerrar votação error: " . $th->getMessage() . "');</script>";
+            return false;
+        }
+    }
+    
+    public function candidatosPorVotos(int $ideleicao){
+        try {
+            $conn = $this->db->getConnection();
+            $sql = "SELECT a.nome, c.qtdVotos FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno WHERE c.ideleicao = ? ORDER BY c.qtdVotos DESC";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$ideleicao]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Throwable $th) {
+            echo "<script>console.log('Erro ao pegar os candidatos por quantidade de votos: " . $th->getMessage() . "');</script>";
+            return false;
+        }
+    }
+
+    public function listarAlunosVotacao(int $ideleicao){
+        try {
+            $conn = $this->db->getConnection();
+            $sql = "SELECT a.nome, a.ra, t.semestre, t.curso FROM aluno a inner join turma t ON a.idturma = t.idturma inner join voto v on v.idaluno = a.idaluno inner join candidato c ON v.idcandidato = c.idcandidato WHERE c.ideleicao = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$ideleicao]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Throwable $th) {
+            echo "<script>console.log('Erro ao pegar os alunos que votaram: " . $th->getMessage() . "');</script>";
             return false;
         }
     }

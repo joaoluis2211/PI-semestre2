@@ -12,6 +12,7 @@ create table aluno(
 idaluno int primary key auto_increment not null,
 nome varchar(120) not null,
 idturma int not null,
+ra int not null,
 constraint fk_turma_aluno foreign key (idturma) references turma (idturma)
 );
 
@@ -46,10 +47,12 @@ constraint fk_eleicao_candidato foreign key (ideleicao) references eleicao (idel
 
 create table ata(
 idata int primary key auto_increment not null,
-presidente varchar(60) not null,
+representante varchar(60) not null,
 vice varchar(60) not null,
-totalVoto int not null,
 ideleicao int not null,
+idturma int not null,
+data date not null,
+constraint fk_turma_ata foreign key (idturma) references turma (idturma),
 constraint fk_eleicao_ata foreign key (ideleicao) references eleicao (ideleicao)
 );
 

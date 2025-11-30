@@ -88,6 +88,25 @@ btnVotar.forEach(button => {
     }
 }
 
+function resultado(){
+document.querySelectorAll('.resultado').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const ideleicao = this.dataset.ideleicao;
+        const idturma = this.dataset.idturma;
+        const tipo = this.dataset.tipo; // ADMIN ou ALUNO
+
+        let destino = '';
+
+        if (tipo === 'administrador') {
+            destino = `resultado_admin.php?ideleicao=${ideleicao}&idturma=${idturma}`;
+        } else {
+            destino = `resultado.php?ideleicao=${ideleicao}&idturma=${idturma}`;
+        }
+
+        window.location.href = destino;
+    });
+});
+}
 
 function confirmarVoto(){
 const btnConfirmarVoto = document.querySelectorAll('.confirmarVoto');

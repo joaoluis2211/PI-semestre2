@@ -43,4 +43,13 @@ class AlunoController {
             return null;
         }
     }
+
+    public function getAlunoPorTurma(int $idturma){
+        try {
+            return $this->alunoDAO->getAlunoPorTurma($idturma);
+        } catch (Exception $e) {
+            echo "<script>console.log('Localizar aluno error: " . $e->getMessage() . "');</script>";
+            return null;
+        }
+    }
 }

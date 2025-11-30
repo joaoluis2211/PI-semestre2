@@ -42,16 +42,15 @@
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home.php">Início</a></li>
                 <li><a class="hover:text-black" href="votacao.php">Votações</a></li>
-                <li><a class="hover:text-black" href="candidaturas.php">Candidaturas</a></li>
+                <li><a class="hover:text-black" href="candidaturas.php">Eleições</a></li>
                 <li><a class="hover:text-black" href="regulamento.html">Regulamento</a></li>
-                <li><a class="hover:text-black" href="notificacao.html">Notificações</a></li>
             </ul>
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
         </div>
     </nav>
 
     <div class="w-full flex h-20 border-b border-gray-400 shadow-sm items-center justify-center">
-       <h1 class="text-3xl font-bold">VOTAÇÃO</h1>
+       <h1 class="text-3xl font-bold">VOTAÇÕES</h1>
     </div>
     
     <main class="flex flex-col items-center py-[50px]">
@@ -70,6 +69,7 @@
         $aluno = $alunoController->getAluno($usuario->getIdaluno());
         $idturma = $aluno->getIdturma();
         $votacoes = $eleicaoController->listarVotacoesAbertasPorTurma($idturma);
+        $encerradas = $eleicaoController->listarVotacoesEncerradasPorTurma($idturma);
         foreach ($votacoes as $votacao):
             $jaVotou = $votoController->verificarJaVotou($aluno->getIdaluno(), $votacao['ideleicao']);
         ?>
@@ -104,8 +104,24 @@
                     </div>
                 </div>
             </div>
+        <?php endforeach;
+        foreach ($encerradas as $encerrada):
+        ?>
+        <div class="border px-12 py-4 shadow-md">
+                <h2 class="text-xl font-semibold">Eleição para representante de sala do <?= htmlspecialchars($encerrada['semestre']) ?>º Semestre / 
+            <?= htmlspecialchars($encerrada['curso']) ?></h2>
+                <div class="flex justify-between gap-16 items-center">
+                    <div>
+                        <p>Situação: <?= htmlspecialchars($encerrada['status']) ?></p>
+                        <p>Data de inicio: <?= date('d/m/Y', strtotime($encerrada['dataInicioVotacao'])) ?></p>
+                        <p>Data de Encerramento: <?= date('d/m/Y', strtotime($encerrada['dataFimVotacao'])) ?></p>
+                    </div>
+                    <div>
+                        <button data-tipo="<?= htmlspecialchars($usuario->getTipo()) ?>" data-idturma="<?= htmlspecialchars($encerrada['idturma']) ?>" data-ideleicao="<?= htmlspecialchars($encerrada['ideleicao']) ?>" class="resultado w-[14rem] py-3 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" type="button">VER RESULTADO</button>
+                    </div>
+                </div>
+        </div>
         <?php endforeach; ?>
-
         </div>
     </main>
 
@@ -143,6 +159,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         votar();
         confirmarVoto();
+        resultado();
     });
 </script>
 </body>
