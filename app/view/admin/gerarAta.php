@@ -35,6 +35,12 @@ $dataExtenso = strftime('%d de %B de %Y', strtotime($dataAta));
 $curso = $turma->getCurso();
 $curso = strtoupper($curso);
 
+$cursoata = str_replace(' ', '_', $curso);
+$cursoata = str_replace('Ç', 'C', $cursoata);
+$cursoata = str_replace('Ã', 'A', $cursoata);
+$cursoata = strtolower($cursoata);
+$semestre = $turma->getSemestre();
+
 $controller = new EleicaoController();
 // pega a lista completa dos alunos
 $alunos = $controller->listarAlunosVotacao($ideleicao);
@@ -218,5 +224,5 @@ $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 
 // enviar para o navegador (força download)
-$dompdf->stream("Ata_Eleicao_{$ideleicao}_turma{$idturma}.pdf", ["Attachment" => true]);
+$dompdf->stream("Ata_Eleicao_{$semestre}_turma_" . $cursoata . ".pdf", ["Attachment" => true]);
 exit;

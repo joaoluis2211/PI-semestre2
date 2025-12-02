@@ -121,8 +121,8 @@ session_start();
                     <label for="dataFimCandidatura" class="text-lg">Data de Fechamento da eleição:</label>
                     <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded mb-4" name="dataFimCandidatura" required>
 
-                    <label for="dataFimVotacao" class="text-lg">Data de Início da votação:</label>
-                    <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded mb-4" name="dataFimVotacao" required>
+                    <label for="dataInicioVotacao" class="text-lg">Data de Início da votação:</label>
+                    <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded mb-4" name="dataInicioVotacao" required>
 
                     <label for="dataFimVotacao" class="text-lg">Data de Fechamento da votação:</label>
                     <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded mb-4" name="dataFimVotacao" required>

@@ -12,7 +12,7 @@ class EleicaoDAO{
             $conn = $this->db->getConnection();
             $sql = "INSERT INTO eleicao (dataInicioCandidatura, dataFimCandidatura, dataInicioVotacao, dataFimVotacao, idturma, status) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$eleicao->getDataInicioCandidatura(), $eleicao->getDataFimCandidatura(), $eleicao->getDataFimVotacao(), $eleicao->getDataFimVotacao(), $eleicao->getIdturma(), $eleicao->getStatus()]);
+            $stmt->execute([$eleicao->getDataInicioCandidatura(), $eleicao->getDataFimCandidatura(), $eleicao->getDataInicioVotacao(), $eleicao->getDataFimVotacao(), $eleicao->getIdturma(), $eleicao->getStatus()]);
             return true;
         } catch (\Throwable $th) {
             echo "<script>console.log('Cadastrar eleicao error: " . $th->getMessage() . "');</script>";
@@ -118,7 +118,7 @@ class EleicaoDAO{
     public function abrirVotacao(int $ideleicao){
         try {
             $conn = $this->db->getConnection();
-            $sql = "UPDATE eleicao SET status = 'VOTAÇÃO' where ideleicao = ?";
+            $sql = "UPDATE eleicao SET status = 'VOTACAO' where ideleicao = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$ideleicao]);
             return true;
