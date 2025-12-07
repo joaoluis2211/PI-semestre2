@@ -28,7 +28,10 @@ btnVotar.forEach(button => {
                 const card = document.createElement('div');
                 card.className = 'flex flex-col items-center gap-4 border-2 w-max p-4 rounded-md min-w-[12rem] snap-start shrink-0';
                 card.innerHTML = `
-                  <img class="w-40" src="../../../assets/user.png" alt="user">
+                  <img class="w-40 h-40 object-cover rounded-full" 
+                  src="../../../uploads/candidatos/${htmlEscape(candidato.imagem)}" 
+                  onerror="this.src='../../../assets/user.png'"
+                  alt="Foto do candidato">
                   <p class="text-lg font-semibold">${htmlEscape(candidato.nome)}</p>
                   `;
 
@@ -122,7 +125,7 @@ btnVotar.forEach(button => {
               
               modal.showModal();
           } else {
-            mostrarModal('Nenhum candidato encontrado.');
+            Swal.fire("Aviso", "Nenhum candidato encontrado.", "warning");
           }
         })
         .catch((err) => {
@@ -131,10 +134,6 @@ btnVotar.forEach(button => {
         });
         });
     });
-    function mostrarModal(msg) {
-      document.getElementById('mensagemModal').innerText = msg;
-      document.getElementById('modalConfirmacao').style.display = 'flex';
-    }
     function htmlEscape(text) {
       const div = document.createElement('div');
       div.textContent = text;
@@ -162,49 +161,75 @@ document.querySelectorAll('.resultado').forEach(btn => {
 });
 }
 
-function confirmarVoto(){
-const btnConfirmarVoto = document.querySelectorAll('.confirmarVoto');
+function confirmarVoto() {
+    const btnConfirmarVoto = document.querySelectorAll('.confirmarVoto');
 
-btnConfirmarVoto.forEach(button => {
-    button.addEventListener('click', () =>{
-        const botao = button;
-        const ideleicao = botao.dataset.ideleicao;
-        const idaluno = botao.dataset.idaluno;
-        const idcandidato = window.candidatoSelecionado;
-        const modalId = botao.getAttribute('data-modal');
-        const modal = document.getElementById(modalId);
-       
-        if (!idcandidato) {
-          alert("Selecione um candidato!");
-          return;
-        }
+    btnConfirmarVoto.forEach(button => {
+        button.addEventListener('click', () => {
+            const botao = button;
+            const ideleicao = botao.dataset.ideleicao;
+            const idaluno = botao.dataset.idaluno;
+            const idcandidato = window.candidatoSelecionado;
+            const modalId = botao.getAttribute('data-modal');
+            const modal = document.getElementById(modalId);
 
-        const url = `/PI-semestre1/roteador.php?controller=Voto&acao=votar`;
-  
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-          body: new URLSearchParams({idcandidato, idaluno, ideleicao})
-        })
-        .then(res => res.json())
-        .then(data => {
-          modal.close();
-          if (data.sucesso) {
-            mostrarModal('Voto efetuado com sucesso!');
-          } else {
-            mostrarModal('Falha ao votar');
-          }
-        })
-        .catch((err) => {
-          console.error('Erro:', err);
-          mostrarModal('error');
-        });
+            if (!idcandidato) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Selecione um candidato!'
+                });
+                return;
+            }
+
+            // ✔ Fecha o diálogo ANTES do SweetAlert (resolve o problema!)
+            modal.close();
+
+            Swal.fire({
+                title: "Confirmar voto",
+                text: "Você confirma seu voto e concorda que ele será registrado com sua assinatura na ata?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#b20000",
+                cancelButtonColor: "#505050",
+                confirmButtonText: "Sim, confirmar voto",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+
+                if (!result.isConfirmed) return;
+
+                const url = `/PI-semestre1/roteador.php?controller=Voto&acao=votar`;
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ idcandidato, idaluno, ideleicao })
+                })
+                .then(res => res.json())
+                .then(data => {
+
+                    if (data.sucesso) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Voto registrado com sucesso!'
+                        }).then(() => location.reload());
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Falha ao registrar voto.'
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.error('Erro:', err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro inesperado ao votar.'
+                    });
+                });
+
+            });
         });
     });
-    function mostrarModal(msg) {
-      document.getElementById('mensagemModal').innerText = msg;
-      document.getElementById('modalConfirmacao').style.display = 'flex';
-    }
 }
 
 
@@ -489,50 +514,119 @@ function excluirVotacao() {
 });*/
 
 function candidatar() {
-document.getElementById('btnCandidatar').addEventListener('click', function() {
-  const btn = this;
-  const acao = btn.dataset.candidatado === "true" ? "remover" : "cadastrar";
-  const idaluno = btn.dataset.aluno;
-  const ideleicao = btn.dataset.eleicao;
+    const btn = document.getElementById('btnCandidatar');
 
-  // URL chama o roteador
-  const url = `/PI-semestre1/roteador.php?controller=Candidato&acao=${acao}`;
-  
-   fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-    body: new URLSearchParams({ idaluno, ideleicao })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.sucesso) {
-      if (acao === 'cadastrar') {
-        btn.innerText = 'REMOVER CANDIDATURA';
-        btn.className = 'mx-auto w-[14rem] md:text-base py-4 rounded-lg text-xl font-semibold text-white mt-auto bg-gray-600 hover:bg-gray-700'
-        btn.dataset.candidatado = "true";
-        mostrarModal('Candidatura confirmada com sucesso!');
-      } else {
-        btn.innerText = 'CANDIDATAR-SE';
-        btn.className = 'mx-auto w-[14rem] md:text-base py-4 rounded-lg text-xl font-semibold text-white mt-auto bg-[#b20000] hover:bg-red-600'
-        btn.dataset.candidatado = "false";
-        mostrarModal('Candidatura removida.');
-      }
-    } else {
-      mostrarModal('Erro ao processar candidatura.');
+    btn.addEventListener('click', () => {
+        const jaCandidatado = btn.dataset.candidatado === "true";
+
+        if (jaCandidatado) {
+            // Se já está candidatado → remover normalmente
+            removerCandidatura(btn);
+        } else {
+            // Se NÃO está → abrir modal de upload
+            abrirModalUpload(btn.dataset.aluno, btn.dataset.eleicao);
+        }
+    });
+}
+
+let alunoSelecionado = null;
+let eleicaoSelecionada = null;
+let arquivoImagem = null;
+
+// ABRIR MODAL
+function abrirModalUpload(idaluno, ideleicao) {
+    alunoSelecionado = idaluno;
+    eleicaoSelecionada = ideleicao;
+
+    document.getElementById("modalUpload").classList.remove("hidden");
+}
+
+// FECHAR MODAL
+function fecharModalUpload() {
+    document.getElementById("modalUpload").classList.add("hidden");
+    document.getElementById("inputImagem").value = "";
+    document.getElementById("previewImagem").classList.add("hidden");
+}
+
+// INPUT DE IMAGEM + PREVIEW
+document.addEventListener("change", (e) => {
+    if (e.target.id === "inputImagem") {
+        const file = e.target.files[0];
+        arquivoImagem = file;
+
+        if (file) {
+            const preview = document.getElementById("previewImagem");
+            preview.src = URL.createObjectURL(file);
+            preview.classList.remove("hidden");
+        }
     }
-  })
-  .catch(() => mostrarModal('Falha na comunicação com o servidor.'));
 });
 
-function mostrarModal(msg) {
-  document.getElementById('mensagemModal').innerText = msg;
-  document.getElementById('modalConfirmacao').style.display = 'flex';
-}
+// CONFIRMAR CANDIDATURA
+function confirmarCandidatura() {
+
+    if (!arquivoImagem) {
+        Swal.fire({
+            icon: "warning",
+            title: "Envie uma foto!",
+            text: "É necessário enviar uma foto para registrar a candidatura."
+        });
+        return;
+    }
+
+    const form = new FormData();
+    form.append("idaluno", alunoSelecionado);
+    form.append("ideleicao", eleicaoSelecionada);
+    form.append("imagem", arquivoImagem);
+
+    fetch(`/PI-semestre1/roteador.php?controller=Candidato&acao=cadastrar`, {
+        method: "POST",
+        body: form
+    })
+    .then(res => res.json())
+    .then(data => {
+        fecharModalUpload();
+
+        if (data.sucesso) {
+            Swal.fire({
+                icon: "success",
+                title: "Candidatura registrada!"
+            }).then(() => location.reload());
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Falha ao cadastrar!"
+            });
+        }
+    })
+    .catch(err => {
+        Swal.fire({
+            icon: "error",
+            title: "Erro inesperado",
+            text: err
+        });
+    });
 }
 
-function fecharModal() {
-  document.getElementById('modalConfirmacao').style.display = 'none';
-  location.reload();
+// REMOVER CANDIDATURA (já existia)
+function removerCandidatura(btn) {
+    const idaluno = btn.dataset.aluno;
+    const ideleicao = btn.dataset.eleicao;
+
+    fetch(`/PI-semestre1/roteador.php?controller=Candidato&acao=remover`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ idaluno, ideleicao })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.sucesso) {
+            Swal.fire({
+                icon: "success",
+                title: "Candidatura removida!"
+            }).then(() => location.reload());
+        }
+    });
 }
 
 

@@ -144,7 +144,7 @@ class EleicaoDAO{
     public function candidatosPorVotos(int $ideleicao){
         try {
             $conn = $this->db->getConnection();
-            $sql = "SELECT a.nome, c.qtdVotos FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno WHERE c.ideleicao = ? ORDER BY c.qtdVotos DESC";
+            $sql = "SELECT a.nome, c.qtdVotos, c.imagem FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno WHERE c.ideleicao = ? ORDER BY c.qtdVotos DESC";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$ideleicao]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

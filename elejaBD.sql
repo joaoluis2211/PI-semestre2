@@ -41,6 +41,7 @@ idcandidato int primary key auto_increment not null,
 idaluno int not null,
 ideleicao int not null,
 qtdVotos int not null,
+imagem varchar(255) not null,
 constraint fk_aluno_candidato foreign key (idaluno) references aluno (idaluno),
 constraint fk_eleicao_candidato foreign key (ideleicao) references eleicao (ideleicao)
 );
@@ -122,9 +123,9 @@ INSERT INTO usuario (email, senha, tipo, idaluno) values ('jenifer.lopes@fatec.s
 
 insert into eleicao (dataInicioCandidatura, dataFimCandidatura, dataInicioVotacao, dataFimVotacao, idturma, status) values ('2025-11-11', '2025-11-20', '2025-12-01', '2025-12-20', 2, 'VOTACAO');
 
-insert into candidato (idaluno, ideleicao, qtdVotos) values (1, 1, 0);
-insert into candidato (idaluno, ideleicao, qtdVotos) values (2, 1, 2);
-insert into candidato (idaluno, ideleicao, qtdVotos) values (3, 1, 7);
+insert into candidato (idaluno, ideleicao, qtdVotos, imagem) values (1, 1, 0, '69358e8116871_imagem-paulo.jpg');
+insert into candidato (idaluno, ideleicao, qtdVotos, imagem) values (10, 1, 2, '69358ec2a6665_imagem-jenifer.jpg');
+insert into candidato (idaluno, ideleicao, qtdVotos, imagem) values (4, 1, 7, '69358eb7356f5_imagem-jessica.jpg');
 
 
 insert into voto (idaluno, idcandidato, ideleicao) values (2, 2, 1);
@@ -170,9 +171,9 @@ INSERT INTO usuario (email, senha, tipo, idaluno) values ('jenifer.silva@fatec.s
 
 insert into eleicao (dataInicioCandidatura, dataFimCandidatura, dataInicioVotacao, dataFimVotacao, idturma, status) values ('2025-11-11', '2025-11-20', '2025-11-25', '2025-12-01', 3, 'ENCERRADA');
 
-insert into candidato (idaluno, ideleicao, qtdVotos) values (11, 2, 5);
-insert into candidato (idaluno, ideleicao, qtdVotos) values (12, 2, 3);
-insert into candidato (idaluno, ideleicao, qtdVotos) values (13, 2, 2);
+insert into candidato (idaluno, ideleicao, qtdVotos, imagem) values (11, 2, 5, '6935a70c9e38b_imagem-paulo.jpg');
+insert into candidato (idaluno, ideleicao, qtdVotos, imagem) values (12, 2, 3, '6935a714e3822_imagem-andre.jpg');
+insert into candidato (idaluno, ideleicao, qtdVotos, imagem) values (13, 2, 2, '6935a704852c2_imagem-pedro.jpg');
 
 
 insert into voto (idaluno, idcandidato, ideleicao) values (11, 4, 2);

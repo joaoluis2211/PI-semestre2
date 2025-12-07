@@ -50,8 +50,8 @@ if ($usuario->getTipo() != 'administrador') {
         <div class="flex w-full justify-center items-center h-12 bg-[#b20000]">
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home_admin.php">Início</a></li>
-                <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
                 <li><a class="hover:text-black" href="candidaturas_admin.php">Eleições</a></li>
+                <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
             </ul>
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
@@ -60,10 +60,7 @@ if ($usuario->getTipo() != 'administrador') {
     
     <main class="flex flex-col items-center pb-16">
         <div class="w-full flex flex-row h-20 border-b border-gray-400 shadow-sm mb-8 items-center justify-center">
-            <div class="flex relative items-center">
-                <input class="min-w-[500px] px-4 py-2 border border-gray-400 rounded-3xl" placeholder="Buscar Votação" type="text" id="filtro" name="filtro">
-                <button class="absolute right-3 flex items-center pointer-events-none"><img class="w-7" src="../../../assets/lupa.png" alt="filtro"></button>
-            </div>
+              <h1 class="text-3xl font-bold">Votações</h1>
         </div>
         <?php
         require_once __DIR__ . '/../../controller/EleicaoController.php';

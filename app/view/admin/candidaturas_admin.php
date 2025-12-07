@@ -33,6 +33,11 @@ session_start();
         },
         }
     </script>
+    <style>
+        .swal2-container {
+            z-index: 999999 !important;
+        }
+    </style>
 </head>
 
 <body class="flex flex-col min-h-screen font-sans bg-white text-black" onload="votar(), excluirCandidatura()">
@@ -44,8 +49,8 @@ session_start();
         <div class="flex w-full justify-center items-center h-12 bg-[#b20000]">
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home_admin.php">Início</a></li>
-                <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
                 <li><a class="hover:text-black" href="candidaturas_admin.php">Eleições</a></li>
+                <li><a class="hover:text-black" href="votacao_admin.php">Votações</a></li>
                 <li><a class="hover:text-black" href="regulamento_admin.html">Regulamento</a></li>
             </ul>
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
@@ -54,16 +59,12 @@ session_start();
     
     <main class="flex flex-col items-center">
         <div class="w-full flex flex-row h-20 border-b border-gray-400 shadow-sm mb-8 items-center justify-around">
-            <div class="flex relative items-center">
-                <input class="min-w-[500px] px-4 py-2 border border-gray-400 rounded-3xl" placeholder="Buscar Eleições" type="text" id="filtro" name="filtro">
-                <button class="absolute right-3 flex items-center pointer-events-none"><img class="w-7" src="../../../assets/lupa.png" alt="filtro"></button>
-            </div>
+            <h1 class="text-3xl font-bold">Eleições</h1>
             <button class="absolute right-6 criarCandidatura w-max p-2 rounded-lg bg-[#b20000] hover:bg-red-600 text-xl font-semibold text-white" data-modal="modal-formulario" type="button">CRIAR ELEIÇÃO</button>
         </div>
 
         <div class="flex flex-col w-full min-h-max border-gray-400 justify-center mb-8">
 
-            <h2 class="m-auto text-3xl font-bold mb-5">Eleições</h2>
             <?php
             require_once __DIR__ . '/../../controller/EleicaoController.php';
             $eleicaoController = new EleicaoController();
@@ -88,7 +89,7 @@ session_start();
         <p class="text-white text-base pt-2">&copy; Todos os direitos reservados ao grupo <b>ELEJA.</b></p>
     </footer>
 
-    <dialog id="modal-formulario" class="min-w-[50%]">
+    <dialog id="modal-formulario" class="min-w-[50%] rounded-lg p-0 backdrop:bg-black/50 z-50">
         <div class="flex flex-col p-5 gap-6 max-w-[900px]">
             <div class="flex">
                 <h2 class="mx-auto text-3xl font-bold">Criar eleição</h2>
@@ -133,7 +134,7 @@ session_start();
         </div>
     </dialog>
 
-    <dialog id="modal-candidatos">
+    <dialog id="modal-candidatos" class="rounded-lg p-0 backdrop:bg-black/50 z-50">
         <div class="flex flex-col p-5 gap-6 max-w-[900px] min-w-[700px]">
             <div class="flex w-auto gap-16">
                 <h2 class="mx-auto w-auto text-2xl font-bold">Alunos candidatos a representante de turma</h2>
@@ -146,14 +147,68 @@ session_start();
         </div>
     </dialog>
 
-    <div id="modalConfirmacao" style="display:none; position:fixed; top:0; left:0;
-        width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
-        <div style="background:white; padding:20px; border-radius:10px; text-align:center;">
-            <p id="mensagemModal"></p>
-            <button onclick="fecharModal()">OK</button>
-        </div>
-    </div>
 
     <script src="../../../public/js/script.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("#modal-formulario form");
+
+    form.addEventListener("submit", function (e) {
+
+        const hoje = new Date();
+        hoje.setHours(0,0,0,0);
+
+        const inicioEleicao = new Date(form.dataInicioCandidatura.value);
+        const fimEleicao = new Date(form.dataFimCandidatura.value);
+        const inicioVotacao = new Date(form.dataInicioVotacao.value);
+        const fimVotacao = new Date(form.dataFimVotacao.value);
+
+        // Limpa as horas
+        inicioEleicao.setHours(0,0,0,0);
+        fimEleicao.setHours(0,0,0,0);
+        inicioVotacao.setHours(0,0,0,0);
+        fimVotacao.setHours(0,0,0,0);
+
+        // Regras
+        if (fimEleicao <= inicioEleicao) {
+            e.preventDefault();
+            const modal = document.getElementById("modal-formulario");
+            modal.close();
+
+            Swal.fire("Data inválida", "A data de fim da eleição deve ser maior que a data de início.", "error")
+            .then(() => {
+                modal.showModal();
+            });
+
+            return;
+        }
+
+        if (inicioVotacao <= fimEleicao) {
+            e.preventDefault();
+            const modal = document.getElementById("modal-formulario");
+            modal.close();
+
+            Swal.fire("Data inválida", "A votação deve começar após o término da eleição.", "error")
+            .then(() => {
+                modal.showModal();
+            });
+            return;
+        }
+
+        if (fimVotacao <= inicioVotacao) {
+            e.preventDefault();
+            const modal = document.getElementById("modal-formulario");
+            modal.close();
+
+            Swal.fire("Data inválida", "A data de fim da votação deve ser maior que a data de início.", "error")
+            .then(() => {
+                modal.showModal();
+            });
+            return;
+        }
+
+    });
+});
+</script>
 </body>
 </html>

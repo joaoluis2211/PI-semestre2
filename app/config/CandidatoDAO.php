@@ -7,18 +7,28 @@ class CandidatoDAO{
         $this->db = new Database();
     }
     
-    public function cadastrarCandidato(Candidato $candidato){
-        try {
-            $conn = $this->db->getConnection();
-            $sql = "INSERT INTO candidato (idaluno, ideleicao, qtdVotos) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$candidato->getIdaluno(), $candidato->getIdeleicao(), $candidato->getQtdVotos()]);
-            return true;
-        } catch (\Throwable $th) {
-            echo "<script>console.log('Cadastrar eleicao error: " . $th->getMessage() . "');</script>";
-            return false;
-        }
+public function cadastrarCandidato(Candidato $candidato){
+    try {
+        $conn = $this->db->getConnection();
+
+        $sql = "INSERT INTO candidato (idaluno, ideleicao, qtdVotos, imagem) 
+                VALUES (?, ?, ?, ?)";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            $candidato->getIdaluno(),
+            $candidato->getIdeleicao(),
+            $candidato->getQtdVotos(),
+            $candidato->getImagem()
+        ]);
+
+        return true;
+
+    } catch (\Throwable $th) {
+        echo "<script>console.log('Cadastrar candidato error: " . $th->getMessage() . "');</script>";
+        return false;
     }
+}
 
     public function removerCandidato(Candidato $candidato){
         try {
@@ -36,7 +46,7 @@ class CandidatoDAO{
     public function listarCandidatos(int $ideleicao){
         try {
             $conn = $this->db->getConnection();
-            $sql = "SELECT a.nome, c.qtdVotos, c.idcandidato FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno where c.ideleicao = ?";
+            $sql = "SELECT a.nome, c.qtdVotos, c.idcandidato, c.imagem FROM candidato c INNER JOIN aluno a ON c.idaluno = a.idaluno where c.ideleicao = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$ideleicao]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

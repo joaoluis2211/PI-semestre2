@@ -41,8 +41,8 @@
         <div class="flex w-full justify-center items-center h-12 bg-[#b20000]">
             <ul class="flex items-center gap-16 text-white text-xl">
                 <li><a class="hover:text-black" href="home.php">Início</a></li>
-                <li><a class="hover:text-black" href="votacao.php">Votações</a></li>
                 <li><a class="hover:text-black" href="candidaturas.php">Eleições</a></li>
+                <li><a class="hover:text-black" href="votacao.php">Votações</a></li>
                 <li><a class="hover:text-black" href="regulamento.html">Regulamento</a></li>
             </ul>
             <a class="hover:text-black text-white text-xl absolute right-6" href="../../../index.php">Sair</a>
@@ -107,6 +107,39 @@
             <button onclick="fecharModal()">OK</button>
         </div>
     </div>
+
+<!-- Modal de Upload de Imagem -->
+<div id="modalUpload" class="fixed inset-0 bg-black/50 hidden z-50 flex justify-center items-center">
+    <div class="bg-white p-6 rounded-xl shadow-xl w-[90%] max-w-md text-center">
+        <h2 class="text-2xl font-semibold mb-4">Enviar foto para candidatura</h2>
+
+        <!-- Preview -->
+        <img id="previewImagem" class="w-40 h-40 mx-auto object-cover rounded-full mb-4 hidden" />
+
+        <!-- Upload -->
+        <input 
+            type="file" 
+            id="inputImagem" 
+            accept="image/*"
+            class="block w-full border p-2 rounded mb-4"
+        />
+
+        <div class="flex justify-between mt-4">
+            <button 
+                onclick="fecharModalUpload()" 
+                class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+                Cancelar
+            </button>
+
+            <button 
+                onclick="confirmarCandidatura()" 
+                class="px-4 py-2 bg-meu-vermelho text-white rounded hover:bg-red-700">
+                Confirmar
+            </button>
+        </div>
+    </div>
+</div>
+
     <script src="../../../public/js/script.js"></script>
 </body>
 </html>

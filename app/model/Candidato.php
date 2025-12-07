@@ -6,6 +6,7 @@ class Candidato
     private int $ideleicao;
     private int $idaluno;
     private int $qtdVotos = 0;
+    private string $imagem;
 
 
     public function getIdaluno(): int
@@ -51,5 +52,15 @@ class Candidato
     public function incrementarVoto(): void
     {
         $this->qtdVotos++;
+    }
+
+    public function getImagem(): string
+    {
+        return $this->imagem;
+    }
+
+    public function setImagem(string $imagem): void
+    {
+        $this->imagem = $imagem;
     }
 }

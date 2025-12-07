@@ -54,19 +54,28 @@ $candidatos = $eleicaoController->candidatosPorVotos($ideleicao);
             <div class="flex flex-col mx-auto pt-8 items-center gap-4">
                 <h2 class="text-2xl font-bold">ELEITOS</h2>
                 <div class="flex items-end">
-                    <div class="flex flex-col items-center p-3">
-                        <img class="max-w-[200px]" src="../../../assets/user.png" alt="representante">
-                        <h2 class="text-xl font-semibold">Representante</h2>
-                        <p class="text-md"><?= htmlspecialchars($candidatos[0]['nome']) ?></p>
-                        <p class="text-md"><?= htmlspecialchars($candidatos[0]['qtdVotos']) ?></p>
-                    </div>
-                    <div class="flex flex-col items-center p-3">
-                        <img class="max-w-[150px]" src="../../../assets/user.png" alt="representante">
-                        <h2 class="text-xl font-semibold">Vice-representante</h2>
-                        <p class="text-md"><?= htmlspecialchars($candidatos[1]['nome']) ?></p>
-                        <p class="text-md"><?= htmlspecialchars($candidatos[1]['qtdVotos']) ?></p>
-                    </div>
+                <!-- REPRESENTANTE (1º lugar) -->
+                <div class="flex flex-col items-center p-3">
+                    <img class="w-[200px] h-[200px] rounded-full object-cover shadow-lg border-4 border-gray-300" 
+                        src="<?= "../../../uploads/candidatos/" . htmlspecialchars($candidatos[0]['imagem']) ?>" 
+                        onerror="this.src='../../../assets/user.png'" 
+                        alt="representante">
+                    <h2 class="text-xl font-semibold">Representante</h2>
+                    <p class="text-md"><?= htmlspecialchars($candidatos[0]['nome']) ?></p>
+                    <p class="text-md"><?= htmlspecialchars($candidatos[0]['qtdVotos']) ?> votos</p>
                 </div>
+
+                <!-- VICE REPRESENTANTE (2º lugar) -->
+                <div class="flex flex-col items-center p-3">
+                    <img class="w-[150px] h-[150px] rounded-full object-cover shadow-lg border-4 border-gray-300" 
+                        src="<?= "../../../uploads/candidatos/" . htmlspecialchars($candidatos[1]['imagem']) ?>" 
+                        onerror="this.src='../../../assets/user.png'" 
+                        alt="vice representante">
+                    <h2 class="text-xl font-semibold">Vice-representante</h2>
+                    <p class="text-md"><?= htmlspecialchars($candidatos[1]['nome']) ?></p>
+                    <p class="text-md"><?= htmlspecialchars($candidatos[1]['qtdVotos']) ?> votos</p>
+                </div>
+            </div>
             </div>
         </div>
         <div class="flex flex-col py-8 items-center gap-8">
@@ -76,8 +85,7 @@ $candidatos = $eleicaoController->candidatosPorVotos($ideleicao);
             $alunos = $eleicaoController->listarAlunosVotacao($ideleicao);
             foreach ($alunos as $aluno):
             ?>
-                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-3 rounded-xl">
-                    <img class="max-w-10" src="../../../assets/user.png" alt="foto">
+                <div class="flex min-w-full gap-24 items-center border border-gray-300 p-6 rounded-xl">
                     <div class="flex justify-between flex-1 gap-2">
                         <p class="text-base min-w-[200px] "><?= htmlspecialchars($aluno['nome']) ?></p>
                         <p class="text-base min-w-[200px] text-center"><?= htmlspecialchars($aluno['semestre']) ?> período</p>
