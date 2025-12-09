@@ -10,7 +10,7 @@ btnVotar.forEach(button => {
         const modal = document.getElementById(modalId);
         const tipo = botao.dataset.tipo;
 
-        const url = `/PI-semestre1/roteador.php?controller=Candidato&acao=listar`;
+        const url = `/PI-semestre2/roteador.php?controller=Candidato&acao=listar`;
   
         fetch(url, {
           method: 'POST',
@@ -197,7 +197,7 @@ function confirmarVoto() {
 
                 if (!result.isConfirmed) return;
 
-                const url = `/PI-semestre1/roteador.php?controller=Voto&acao=votar`;
+                const url = `/PI-semestre2/roteador.php?controller=Voto&acao=votar`;
 
                 fetch(url, {
                     method: 'POST',
@@ -579,7 +579,7 @@ function confirmarCandidatura() {
     form.append("ideleicao", eleicaoSelecionada);
     form.append("imagem", arquivoImagem);
 
-    fetch(`/PI-semestre1/roteador.php?controller=Candidato&acao=cadastrar`, {
+    fetch(`/PI-semestre2/roteador.php?controller=Candidato&acao=cadastrar`, {
         method: "POST",
         body: form
     })
@@ -613,7 +613,7 @@ function removerCandidatura(btn) {
     const idaluno = btn.dataset.aluno;
     const ideleicao = btn.dataset.eleicao;
 
-    fetch(`/PI-semestre1/roteador.php?controller=Candidato&acao=remover`, {
+    fetch(`/PI-semestre2/roteador.php?controller=Candidato&acao=remover`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ idaluno, ideleicao })
@@ -638,7 +638,7 @@ btnExcluirCandidatura.forEach(button => {
         const botao = button;
         const ideleicao = botao.dataset.ideleicao;
 
-        const url = `/PI-semestre1/roteador.php?controller=Eleicao&acao=excluir`;
+        const url = `/PI-semestre2/roteador.php?controller=Eleicao&acao=excluir`;
   
         fetch(url, {
           method: 'POST',

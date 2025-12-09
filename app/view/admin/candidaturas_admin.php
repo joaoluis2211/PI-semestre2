@@ -74,7 +74,7 @@ session_start();
             <div id="candidatura-<?= $candidatura['ideleicao'] ?>" class="flex flex-col border px-12 py-6 shadow-md mb-10 w-full md:max-w-[1000px] mx-auto min-h-[200px]">
                 <h2 class="text-2xl md:text-xl md:text-center font-semibold mb-1">Eleição para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
             <?= htmlspecialchars($candidatura['curso']) ?></h2>
-                <p class="mx-auto mb-8">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?> 19:45</p>
+                <p class="mx-auto mb-8">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?></p>
                 <div class="flex">
                     <button data-ideleicao="<?= htmlspecialchars($candidatura['ideleicao']) ?>" class="excluirCandidatura mx-auto w-max p-3 rounded-lg bg-white outline border-gray-300 md:text-base text-xl font-semibold text-gray-300 mt-auto" type="button">EXCLUIR ELEIÇÃO</button>
                     <button  data-ideleicao="<?= htmlspecialchars($candidatura['ideleicao']) ?>" class="votar mx-auto w-max p-3 rounded-lg bg-[#b20000] hover:bg-red-600 md:text-base text-xl font-semibold text-white mt-auto" data-modal="modal-candidatos" type="button">VIZUALIZAR ELEIÇÃO</button>

@@ -79,7 +79,7 @@
             <div class="flex flex-col border px-12 py-6 shadow-md mb-10 max-w-[800px] mx-auto min-h-[200px]">
                 <h2 class="text-2xl md:text-center md:text-xl font-semibold mb-1">Eleição para representante de sala do <?= htmlspecialchars($candidatura['semestre']) ?>º Semestre / 
             <?= htmlspecialchars($candidatura['curso']) ?></h2>
-                <p class="mx-auto mb-4">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?> 19:45</p>
+                <p class="mx-auto mb-4">Disponível até: <?= date('d/m/Y', strtotime($candidatura['dataFimCandidatura'])) ?></p>
                 <button id="btnCandidatar"
                     data-aluno="<?= htmlspecialchars($aluno->getIdaluno()) ?>"
                     data-eleicao="<?= htmlspecialchars($candidatura['ideleicao']) ?>"

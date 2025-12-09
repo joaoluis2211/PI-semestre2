@@ -85,7 +85,7 @@ setlocale(LC_TIME, 'pt_BR.UTF-8', 'pt_BR', 'Portuguese_Brazil');
 $dataExtenso = strftime('%d de %B de %Y', strtotime($dataAta));
 
 // --- monta HTML do PDF (estilizado para DOMPDF)
-// Usamos fonts padrão (Times) e estilos que o dompdf interpreta bem
+// --- monta HTML do PDF (estilizado para DOMPDF)
 $html = '
 <!doctype html>
 <html lang="pt-br">
@@ -95,115 +95,100 @@ $html = '
   @page { margin: 40px 40px; }
   body { font-family: "Times New Roman", "serif"; font-size: 13px; color: #000; line-height: 1.4; }
   .header { width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-  .header .left, .header .right { width:30%; }
-  .header .center { width:40%; text-align:center; }
-  .title { text-align:center; font-weight:700; font-size:16px; margin-top:6px; margin-bottom:6px; }
-  .sub { text-align:center; font-size:12px; margin-bottom:12px; }
   .att-paragraph { text-align:justify; text-justify:inter-word; margin-top:10px; margin-bottom:10px; }
-  .bold { font-weight:700; }
   .small { font-size:12px; }
-  .table-sign { width:100%; border-collapse: collapse; margin-top:18px; page-break-inside: auto; }
-  .table-sign th, .table-sign td { border: 1px solid #000; padding:6px; font-size:13px; text-align:left; vertical-align: middle; }
+  .table-sign { width:100%; border-collapse: collapse; margin-top:18px; }
+  .table-sign th, .table-sign td { border: 1px solid #000; padding:6px; font-size:13px; text-align:left; }
   .table-sign th { font-weight:700; text-align:center; }
-  .signature-cell { height:50px; } /* espaço para assinatura */
+  .signature-cell { height:auto; text-align:center; font-size:12px; }
   .footer { position: fixed; bottom: 20px; left: 40px; right: 40px; text-align:center; font-size:11px; }
-  .logos { display:flex; justify-content:space-between; align-items:center; }
-  .logo-img { max-height:70px; }
-  .gov-logo { max-height:60px; }
 </style>
 </head>
 <body>
-  <table style="width:100%; margin-bottom:10px;">
-    <tr>
-        <!-- Logo do Governo -->
-        <td style="width:25%; text-align:left; vertical-align:middle;">
-            ' . ($logoGov ? '<img src="'.$logoGov.'" style="height:70px;">' : '') . '
-        </td>
 
-        <!-- Texto central -->
-        <td style="width:50%; text-align:center; vertical-align:middle;">
+<!-- Cabeçalho mantido igual -->
+<table style="width:100%; margin-bottom:10px;">
+    <tr>
+        <td style="width:25%; text-align:left;">' . ($logoGov ? '<img src="'.$logoGov.'" style="height:70px;">' : '') . '</td>
+        <td style="width:50%; text-align:center;">
             <div style="font-size:16px; font-weight:bold;">
                 Faculdade de Tecnologia de Itapira –<br>
                 “Ogari de Castro Pacheco”
             </div>
-            <div style="font-size:12px; margin-top:4px;">
-                Diretoria Acadêmica
-            </div>
+            <div style="font-size:12px; margin-top:4px;">Diretoria Acadêmica</div>
         </td>
-
-        <!-- Logo CPS -->
-        <td style="width:25%; text-align:right; vertical-align:middle;">
-            ' . ($logoCPS ? '<img src="'.$logoCPS.'" style="height:70px;">' : '') . '
-        </td>
+        <td style="width:25%; text-align:right;">' . ($logoCPS ? '<img src="'.$logoCPS.'" style="height:70px;">' : '') . '</td>
     </tr>
 </table>
 
-<!-- Linha abaixo do cabeçalho -->
 <div style="width:100%; border-top:2px solid #000; margin-bottom:12px;"></div>
 
+<div class="att-paragraph small">
+    DATA DE ELEIÇÃO DE REPRESENTANTES DE TURMA DO ANO DE '. strftime('%Y', strtotime($dataAta)) . 
+    ' DO CURSO DE '. $curso .' DA FACULDADE DE TECNOLOGIA DE ITAPIRA “OGARI DE CASTRO PACHECO”. 
+    Ao ' . strftime('%d', strtotime($dataAta)) . ' dia(s) do mês de ' . strftime('%B', strtotime($dataAta)) . 
+    ' de ' . strftime('%Y', strtotime($dataAta)) . 
+    ', foram apurados os votos dos alunos regularmente matriculados para eleição dos novos representantes de turma.
+</div>
 
-  <div class="att-paragraph small">
-    <span class="bold">DATA DE ELEIÇÃO DE REPRESENTANTES DE TURMA DO ANO DE '. strftime('%Y', strtotime($dataAta)) . ' DO CURSO DE '. $curso .' DA FACULDADE DE TECNOLOGIA DE ITAPIRA “OGARI DE CASTRO PACHECO”. ';
+<div class="att-paragraph small">
+    Foi eleito(a) como representante o(a) aluno(a) <b>' . htmlspecialchars($representante) . '</b>, 
+    R.A. nº '. $raRepresentante .' e eleito como vice o(a) aluno(a) 
+    <b>' . htmlspecialchars($vice) . '</b>, R.A. nº '. $raVice .'.
+</div>
 
-$html .= '
-    Ao ' . strftime('%d', strtotime($dataAta)) . ' dia(s) do mês de ' . strftime('%B', strtotime($dataAta)) . ' de ' . strftime('%Y', strtotime($dataAta)) . ', foram apurados os votos dos alunos regularmente matriculados do referido período para eleição de novos representantes de turma. 
-    Os representantes eleitos fazem a representação dos alunos nos órgãos colegiados da Faculdade, com direito a voz e voto, conforme o disposto no artigo 69 da Deliberação CEETEPS nº 07, de 15 de dezembro de 2006. 
-    Foi eleito(a) como representante o(a) aluno(a) <b>' . htmlspecialchars($representante) . '</b>, R.A. nº '. $raRepresentante .' e eleito como vice o(a) aluno(a) <b> ' . htmlspecialchars($vice) . ' </b>, R.A. nº '. $raVice .' . 
-    A presente ata, após leitura e concordância, vai assinada por todos os alunos participantes.
-  </div>
+<!-- NOVO TEXTO: assinatura automática -->
+<div class="att-paragraph small">
+    <b>Nota:</b> A assinatura dos alunos é automaticamente validada pelo registro de voto no sistema ELEJA, 
+    não sendo necessária assinatura manual na presente ata.
+</div>
 
-  <div style="text-align:right; margin-top:12px;"><b>Itapira, ' . htmlspecialchars($dataExtenso) . '.</b></div>
+<div style="text-align:right; margin-top:12px;">
+    <b>Itapira, ' . htmlspecialchars($dataExtenso) . '.</b>
+</div>
 
-  <table class="table-sign">
+<table class="table-sign">
     <thead>
       <tr>
         <th style="width:6%;">Nº</th>
         <th style="width:44%;">NOME</th>
         <th style="width:25%;">R.A. COMPLETO</th>
-        <th style="width:25%;">ASSINATURA</th>
+        <th style="width:25%;">ASSINATURA (VOTO)</th>
       </tr>
     </thead>
     <tbody>
 ';
 
 $contador = 1;
-if (count($alunos) === 0) {
-    // se não há alunos, mostra linhas em branco suficientes
-    for ($i=0; $i<20; $i++) {
-        $html .= "<tr>
-                    <td>{$contador}</td>
-                    <td></td>
-                    <td></td>
-                    <td class='signature-cell'></td>
-                  </tr>";
-        $contador++;
-    }
-} else {
-    foreach ($alunos as $aluno) {
-        // tenta obter RA se existir; se não, deixa em branco
-        $ra = $aluno['ra'] ?? ($aluno['ra'] ?? '');
-        $nome = htmlspecialchars($aluno['nome'] ?? '');
-        $html .= "<tr>
-                    <td>{$contador}</td>
-                    <td>{$nome}</td>
-                    <td>" . htmlspecialchars($ra) . "</td>
-                    <td class='signature-cell'></td>
-                  </tr>";
-        $contador++;
-    }
+
+foreach ($alunos as $aluno) {
+    $ra = $aluno['ra'] ?? '';
+    $nome = htmlspecialchars($aluno['nome']);
+
+    $html .= "
+        <tr>
+            <td>{$contador}</td>
+            <td>{$nome}</td>
+            <td>" . htmlspecialchars($ra) . "</td>
+
+            <!-- COLUNA ALTERADA -->
+            <td class='signature-cell'>
+                <span style='font-weight:bold;'>Voto registrado</span>
+            </td>
+        </tr>
+    ";
+
+    $contador++;
 }
 
-// fechar tabela e adicionar rodapé (logos no rodapé, se quiser)
 $html .= '
     </tbody>
-  </table>
+</table>
 
-  <div style="height:30px;"></div>
-
-  <div class="footer">
-    <p class="w-full text-center">www.fatecitapira.edu.br</p>
-    &nbsp; Rua Tereza Lera Paoletti, 590 • Jardim Bela Vista • 13974-080 • Itapira • SP • Tel.: (19) 3843-7537
-  </div>
+<div class="footer">
+    <p>www.fatecitapira.edu.br</p>
+    Rua Tereza Lera Paoletti, 590 • Jardim Bela Vista • 13974-080 • Itapira • SP • Tel.: (19) 3843-7537
+</div>
 
 </body>
 </html>

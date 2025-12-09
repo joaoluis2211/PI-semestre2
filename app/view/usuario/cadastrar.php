@@ -80,7 +80,7 @@
 
         <button type="submit" class="w-full bg-[#b20000] hover:bg-red-500 text-white font-semibold py-3 rounded mb-4">CADASTRAR</button>
         <div class="text-sm text-center pt-2">
-            <p class="text-gray-600">Já tem uma conta? <a href="/PI-semestre1/index.php" class="text-sm font-semibold text-[#b20000] hover:underline">Faça Login</a></p>
+            <p class="text-gray-600">Já tem uma conta? <a href="/PI-semestre2/index.php" class="text-sm font-semibold text-[#b20000] hover:underline">Faça Login</a></p>
         </div>
       </form>
 
@@ -89,6 +89,6 @@
       </footer>
     </section>
   </main>
-  <script src="/PI-semestre1/public/js/script.js"></script>
+  <script src="/PI-semestre2/public/js/script.js"></script>
 </body>
 </html>
